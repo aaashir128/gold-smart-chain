@@ -4,10 +4,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import axios from "axios";
 import { baseURL, tradeAPI } from "../../../../Strings/Strings";
+import standCoin from "../../../../images/stand.png";
+import solidToken from "../../../../images/solid.png";
 
 const ProjectSlider = (props) => {
   const [data, setData] = useState([]);
+  const [coins, setCoins] = useState(0);
   const [invest, setInvest] = useState(0);
+
+  console.log("coin", props);
   useEffect(() => {
     let usr = localStorage.getItem("user");
     usr = JSON.parse(usr);
@@ -26,6 +31,8 @@ const ProjectSlider = (props) => {
     //   setInvest(TotalInvested);
     // });
   }, [props.history]);
+
+  console.log("coins", coins);
   const settings = {
     dots: false,
     infinite: true,
@@ -37,7 +44,7 @@ const ProjectSlider = (props) => {
       {
         breakpoint: 1401,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: 2,
           slidesToScroll: 1,
         },
       },
@@ -66,11 +73,32 @@ const ProjectSlider = (props) => {
               <div className="slide-icon"></div>
             </div>
             <center>
-              <span className="mb-3 d-block fs-22">
-                <strong>$ {data?.balance}</strong>
-              </span>
-
-              <span className="mb-7 d-block fs-18">Stand Coin</span>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <img
+                  src={standCoin}
+                  alt=""
+                  width="64px"
+                  height="64px"
+                  style={{ objectFit: "contain", marginRight: "24px" }}
+                />
+                <div
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <span className="mb-7 d-block fs-28 fw-bold">Stand Coin</span>
+                  <span className="mb-0 d-block fs-22 text-start">
+                    <strong>{props?.coin}</strong>
+                  </span>
+                </div>
+              </div>
             </center>
           </div>
         </div>
@@ -80,11 +108,35 @@ const ProjectSlider = (props) => {
               <div className="slide-icon"></div>
             </div>
             <center>
-              <span className="mb-3 d-block fs-22">
-                <strong>$ {invest}</strong>
-              </span>
-
-              <span className="mb-7 d-block fs-18">Solid Token</span>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <img
+                  src={solidToken}
+                  alt=""
+                  width="64px"
+                  height="64px"
+                  style={{ objectFit: "contain", marginRight: "24px" }}
+                />
+                <div
+                  style={{
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <span className="mb-7 d-block fs-28 fw-bold">
+                    Solid Token
+                  </span>
+                  <span className="mb-0 d-block fs-22 text-start">
+                    {/* <strong>{props?.token}</strong> */}
+                    <strong>{props?.solid}</strong>
+                  </span>
+                </div>
+              </div>
             </center>
           </div>
         </div>

@@ -9,7 +9,7 @@ import {
 } from "../../store/actions/AuthActions";
 // image
 // import logo from "../../images/logo-full.png";
-import logo from "../../images/logo.jpeg";
+import logo from "../../images/logo2.png";
 import axios from "axios";
 import { baseURL } from "../../Strings/Strings";
 

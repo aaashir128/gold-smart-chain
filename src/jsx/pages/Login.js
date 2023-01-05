@@ -10,7 +10,7 @@ import {
 
 // image
 // import logo from "../../images/logo-full.png";
-import logo from "../../images/logo.jpeg";
+import logo from "../../images/logo2.png";
 import loginbg from "../../images/pic1.png";
 import tradingPic from "../../images/trading.webp";
 import axios from "axios";

@@ -81,7 +81,7 @@ function Withdrawl(props) {
                     />
                   </div>
 
-                  <label>Enter Address</label>
+                  {/* <label>Enter Address</label>
                   <div className="input-group mb-3">
                     <input
                       value={address}
@@ -89,7 +89,7 @@ function Withdrawl(props) {
                       className="form-control"
                       onChange={(e) => setAddress(e.target.value)}
                     />
-                  </div>
+                  </div> */}
 
                   <div className="form-group"></div>
                   <button

@@ -8,6 +8,8 @@ import { Button } from "react-bootstrap";
 import { ThemeContext } from "../../../context/ThemeContext";
 import ProjectSlider from "./Dashboard/ProjectSlider";
 import TransactionHistory from "../AppsMenu/AppProfile/TransactionHistory";
+import axios from "axios";
+import { baseURL } from "../../../Strings/Strings";
 
 const ChartBarApex = loadable(() =>
   pMinDelay(import("./Dashboard/ChartBarApex"), 1000)
@@ -16,15 +18,52 @@ const ChartBarApex = loadable(() =>
 const Home = (props) => {
   const { changeBackground } = useContext(ThemeContext);
   const [data, setData] = useState([]);
+  const [coin, setCoin] = useState();
+  const [solid, setSolid] = useState();
+  const tokn = JSON.parse(localStorage.getItem("token"));
+
   useEffect(() => {
-    changeBackground({ value: "light", label: "Light" });
     let usr = localStorage.getItem("user");
     usr = JSON.parse(usr);
-    // axios.get(`${baseURL}api/wallet/${usr?.id}`).then((res) => {
-    //   console.log(res, "res");
-    //   setData(res.data.wallet);
-    // });
-  }, [props.history]);
+    axios
+      .get(`${baseURL}/api/wallet/${usr?.id}`, {
+        headers: { "x-auth-token": tokn },
+      })
+      .then((res) => {
+        // console.log(res, "res");
+        setData(res?.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    axios
+      .get(`${baseURL}/api/standcoin/${usr?.id}`, {
+        headers: { "x-auth-token": tokn },
+      })
+      .then((res) => {
+        // console.log(res, "resCoin");
+        setCoin(res?.data?.stand_coin);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    axios
+      .get(`${baseURL}/api/exchangecoin/${usr?.id}`, {
+        headers: { "x-auth-token": tokn },
+      })
+      .then((res) => {
+        // console.log(res, "resExhcange");
+        setSolid(res?.data?.exchange_coin_amount);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
+  // useEffect(() => {
+
+  // }, [coin]);
+
   return (
     <>
       <div className="row">
@@ -53,7 +92,7 @@ const Home = (props) => {
                     <br />
                     <div className="col-xl-12">
                       <div className="card-body pt-0">
-                        <ProjectSlider {...data} />
+                        <ProjectSlider coin={coin} solid={solid} />
                       </div>
                     </div>
                   </div>

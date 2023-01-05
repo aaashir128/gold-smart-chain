@@ -115,7 +115,7 @@ function DepositRequest() {
         getDepositRequests();
       })
       .catch((err) => {
-        console.log("error", err);
+        console.log("error in requests", err.response.data);
       });
   };
   const svg1 = (

@@ -11436,7 +11436,8 @@ label {
   text-align: left;
   position: absolute;
   top: 0;
-  background-color: var(--nav-headbg);
+  /* background-color: var(--nav-headbg); */
+  background-color: darkblue;
   transition: all 0.2s ease;
   z-index: 5;
 }
@@ -15707,7 +15708,8 @@ html[dir="rtl"]
   top: 7.5rem;
   padding-top: 0;
   z-index: 6;
-  background-color: var(--sidebar-bg);
+  /* background-color: var(--sidebar-bg); */
+  background-color: darkblue;
   transition: all 0.2s ease;
   box-shadow: 0rem 0.9375rem 1.875rem 0rem rgba(0, 0, 0, 0.02);
 }
@@ -15808,7 +15810,8 @@ html[dir="rtl"]
   font-weight: 500;
   display: inline-block;
   font-size: 1rem;
-  color: #737b8b;
+  /* color: #737b8b; */
+  color: white;
 }
 .dlabnav .metismenu > li > a i {
   color: #96a0af;
@@ -15834,7 +15837,8 @@ html[dir="rtl"]
   fill: var(--primary);
 }
 .dlabnav .metismenu > li.mm-active > a {
-  color: var(--primary) !important;
+  /* color: var(--primary) !important; */
+  color: white !important;
   background: #3dabff48 !important
   ;
   font-weight: 600;
@@ -44525,3 +44529,4 @@ html[dir="rtl"]
   margin-top: -470px;
 }
 /*# sourceMappingURL=style.css.map */
+

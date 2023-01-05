@@ -7,6 +7,16 @@ import PerfectScrollbar from "react-perfect-scrollbar";
 import { Link } from "react-router-dom";
 import { useScrollPosition } from "@n8tb1t/use-scroll-position";
 import { ThemeContext } from "../../../context/ThemeContext";
+import HomeIcon from "@mui/icons-material/Home";
+import {
+  AttachMoney,
+  CurrencyBitcoin,
+  CurrencyExchange,
+  Money,
+  Payments,
+  Settings,
+} from "@mui/icons-material";
+
 // import watchListIcon from "../../../icons/sidebar/watchlist.png";
 
 class MM extends Component {
@@ -93,6 +103,7 @@ const SideBar = () => {
     withdrawl = ["withdrawl"],
     discover = ["discover"],
     buy = ["buy"],
+    sell = ["sell"],
     exchange = ["exchange"],
     settings = ["settings"],
     pages = [
@@ -146,7 +157,8 @@ const SideBar = () => {
           </ul>
           <li className={`${deshBoard.includes(path) ? "mm-active" : ""}`}>
             <Link className="ai-icon" to="/dashboard">
-              <i className="fas fa-home"></i>
+              {/* <i className="fas fa-home"></i> */}
+              <HomeIcon />
               <span className="nav-text">Dashboard</span>
             </Link>
           </li>
@@ -156,8 +168,19 @@ const SideBar = () => {
             <Link className="ai-icon" to="/buy">
               {/* <i className="fas fa-coins"></i> */}
 
-              <i className="fas fa-clipboard-list"></i>
+              {/* <i className="fas fa-clipboard-list"></i> */}
+              <CurrencyBitcoin />
               <span className="nav-text">Buy</span>
+            </Link>
+          </li>
+
+          <li className={`${sell.includes(path) ? "mm-active" : ""}`}>
+            <Link className="ai-icon" to="/sell">
+              {/* <i className="fas fa-coins"></i> */}
+
+              {/* <i className="fas fa-clipboard-list"></i> */}
+              <Money color="white" />
+              <span className="nav-text">Sell</span>
             </Link>
           </li>
 
@@ -178,25 +201,29 @@ const SideBar = () => {
           </li> */}
           <li className={`${deposit.includes(path) ? "mm-active" : ""}`}>
             <Link className="ai-icon" to="/deposit">
-              <i className="fas fa-wallet"></i>
+              {/* <i className="fas fa-wallet"></i> */}
+              <AttachMoney color={"#FFFFFF"} />
               <span className="nav-text">Deposit</span>
             </Link>
           </li>
           <li className={`${withdrawl.includes(path) ? "mm-active" : ""}`}>
             <Link className="ai-icon" to="/withdrawl">
-              <i className="fas fa-money-bill-alt"></i>
+              {/* <i className="fas fa-money-bill-alt"></i> */}
+              <Payments />
               <span className="nav-text">Withdrawal</span>
             </Link>
           </li>
           <li className={`${exchange.includes(path) ? "mm-active" : ""}`}>
             <Link to="/exchange" className="ai-icon">
-              <i className="fas fa-chart-line"></i>
+              {/* <i className="fas fa-chart-line"></i> */}
+              <CurrencyExchange color={"secondary"} />
               <span className="nav-text">Exchange</span>
             </Link>
           </li>
           <li className={`${settings.includes(path) ? "mm-active" : ""}`}>
             <Link to="/settings" className="ai-icon">
-              <i className="fas fa-chart-line"></i>
+              {/* <i className="fas fa-chart-line"></i> */}
+              <Settings fontSize="large" />
               <span className="nav-text">Settings</span>
             </Link>
           </li>
@@ -226,7 +253,7 @@ const SideBar = () => {
         </div>
         <div className="copyright">
           <p>
-            <strong>Prime Crypto Exchange</strong> © 2022 All Rights Reserved
+            <strong>GSC Dashboard</strong> © 2022 All Rights Reserved
           </p>
           <p className="fs-12">
             <span className="heart" style={{ display: "none" }}></span>

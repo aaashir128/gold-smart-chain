@@ -3,7 +3,8 @@ import React, { Fragment, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../../../context/ThemeContext";
 // import logo from "../../../images/logo-full.png";
-import logo from "../../../images/logo.jpeg";
+// import logo from "../../../images/logo.jpeg";
+import logo from "../../../images/logo2.png";
 
 const NavHader = () => {
   const [toggle, setToggle] = useState(false);

@@ -8,7 +8,7 @@ import { baseURL } from "../../../Strings/Strings";
 
 function Deposit(props) {
   const [amount, setAmount] = useState(0);
-  const [address, setAddress] = useState(0);
+  // const [address, setAddress] = useState(0);
 
   const notifyTopRight = async (e) => {
     e.preventDefault();
@@ -26,7 +26,7 @@ function Deposit(props) {
       const postData = {
         user_id: usr?.id,
         amount: parseFloat(amount),
-        address: address,
+        // address: address,
       };
       console.log("postData", postData);
       axios
@@ -44,6 +44,9 @@ function Deposit(props) {
             draggable: true,
           });
           props.history.push("/dashboard");
+        })
+        .catch((err) => {
+          console.log("error", err.response.data);
         });
     } else {
       console.log("amount not sufficent");
@@ -82,7 +85,7 @@ function Deposit(props) {
                     />
                   </div>
 
-                  <label>Enter Address</label>
+                  {/* <label>Enter Address</label>
                   <div className="input-group mb-3">
                     <input
                       value={address}
@@ -90,7 +93,7 @@ function Deposit(props) {
                       className="form-control"
                       onChange={(e) => setAddress(e.target.value)}
                     />
-                  </div>
+                  </div> */}
 
                   <div className="form-group"></div>
                   <button

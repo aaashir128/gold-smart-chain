@@ -6,6 +6,7 @@ import { Switch, Route, useParams } from "react-router-dom";
 import "./index.css";
 import "./chart.css";
 import "./step.css";
+import "react-toastify/dist/ReactToastify.css";
 
 /// Layout
 import Nav from "./layouts/nav";
@@ -65,7 +66,7 @@ import UiTypography from "./components/bootstrap/Typography";
 import Select2 from "./components/PluginsMenu/Select2/Select2";
 
 import MainSweetAlert from "./components/PluginsMenu/SweetAlert/SweetAlert";
-import Toastr from "./components/PluginsMenu/Toastr/Toastr";
+// import Toastr from "./components/PluginsMenu/Toastr/Toastr";
 
 //Redux
 import IndexReduxSimpaleForm from "./pages/IndexReduxSimpaleForm";
@@ -120,6 +121,7 @@ import TransactionHistoryScreen from "./components/Transaction history Screen/Tr
 import DiscoverScreen from "./components/Discover Screen/DiscoverScreen";
 import Exchange from "./components/Exchange/Exchange";
 import Buy from "./components/Buy/Buy";
+import Sell from "./components/Sell/Sell";
 
 const Markup = () => {
   let { coin } = useParams();
@@ -168,6 +170,9 @@ const Markup = () => {
     //Buy
     { url: "buy", component: Buy },
 
+    //Sell
+    { url: "sell", component: Sell },
+
     /// Apps
     { url: "app-profile", component: AppProfile },
     { url: "admin-dashboard", component: AdminDashboard },
@@ -206,7 +211,7 @@ const Markup = () => {
     // { url: "uc-nestable", component: Nestable },
     // { url: "uc-noui-slider", component: MainNouiSlider },
     { url: "uc-sweetalert", component: MainSweetAlert },
-    { url: "uc-toastr", component: Toastr },
+    // { url: "uc-toastr", component: Toastr },
     // { url: "map-jqvmap", component: JqvMap },
     // { url: "uc-lightgallery", component: Lightgallery },
 
