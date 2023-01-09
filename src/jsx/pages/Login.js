@@ -7,6 +7,7 @@ import {
   loginAction,
   loginConfirmedAction,
 } from "../../store/actions/AuthActions";
+import { ToastContainer, toast } from "react-toastify";
 
 // image
 // import logo from "../../images/logo-full.png";
@@ -83,12 +84,21 @@ function Login(props) {
       })
       .catch((e) => {
         console.log(e);
-        showModal(
-          "Error!",
-          `❌ Error occured while Athenticating : ${
-            e.response.data ? e.response.data : "Unknown Error Occured."
-          }`
-        );
+        toast.error("❌ Wrong credentials", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+        // showModal(
+        //   "Error!",
+        //   `❌ Error occured while Athenticating : ${
+        //     e.response.data ? e.response.data : "Unknown Error Occured."
+        //   }`
+        // );
       });
   }
 
@@ -236,6 +246,17 @@ function Login(props) {
             </div>
           </div>
         </div>
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
       {/* <ERModal op={op} setop={setop} head={hd} msg={msg} /> */}
     </div>

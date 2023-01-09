@@ -41,9 +41,9 @@ function Deposit(props) {
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
+            onClose: () => props.history.push("/dashboard"),
             draggable: true,
           });
-          props.history.push("/dashboard");
         })
         .catch((err) => {
           console.log("error", err.response.data);
@@ -105,20 +105,20 @@ function Deposit(props) {
                   </button>
                 </div>
               </form>
-
-              <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-              />
             </div>
           </div>
+
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </div>
       </div>
     </>

@@ -4,20 +4,57 @@ import { Badge, Card, Col, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { baseURL } from "../../../../Strings/Strings";
+import CurrencyFormat from "react-currency-format";
+import sortArray from "../../../../utils/sort";
 
 function TransactionHistory() {
   const [data, setData] = useState([]);
-  // useEffect(() => {
+  const [deposit, setdeposit] = useState([]);
+  const [fullData, setfullData] = useState([]);
+  const [order, setorder] = useState("ASC");
 
-  //   let usr = localStorage.getItem("user");
-  //   usr = JSON.parse(usr);
-  //   axios
-  //     .get(`${baseURL}api/deposit_requests?user_id=${usr?.id}`)
-  //     .then((res) => {
-  //       console.log(res, "res");
-  //       setData(res.data.DepositRequests.reverse());
-  //     });
-  // }, []);
+  useEffect(() => {
+    let usr = localStorage.getItem("user");
+    let token = JSON.parse(localStorage.getItem("token"));
+    usr = JSON.parse(usr);
+    axios
+      .get(`${baseURL}/api/withdraw/${usr?.id}`, {
+        headers: { "x-auth-token": token },
+      })
+      .then((res) => {
+        console.log(res?.data, "res");
+        const nn = res?.data?.map((i) => {
+          return { ...i, type: "Withdraw" };
+        });
+        setData(nn.reverse());
+      })
+      .catch((err) => {
+        console.log(err?.response?.data);
+      });
+
+    axios
+      .get(`${baseURL}/api/deposit/${usr?.id}`, {
+        headers: { "x-auth-token": token },
+      })
+      .then((res) => {
+        console.log(res?.data, "res");
+        const nn = res?.data?.map((i) => {
+          return { ...i, type: "Deposit" };
+        });
+        setdeposit(nn.reverse());
+      })
+      .catch((err) => {
+        console.log(err?.response?.data);
+      });
+  }, []);
+  useEffect(() => {
+    setfullData([...data, ...deposit]);
+  }, [data, deposit]);
+
+  const sortDATA = (arr, elem, type, order) => {
+    setfullData(sortArray(arr, elem, type, order));
+    order == "ASC" ? setorder("DESC") : setorder("ASC");
+  };
   return (
     <div>
       <Col lg={12}>
@@ -30,27 +67,51 @@ function TransactionHistory() {
               <thead>
                 <tr>
                   <th>S.No</th>
-                  <th>Date Time</th>
-                  <th>Status</th>
-                  <th>Type</th>
-                  <th>Amount</th>
+                  <th
+                    onClick={() => {
+                      sortDATA(fullData, "requested_at", "date", order);
+                    }}
+                  >
+                    Date Time
+                  </th>
+                  <th
+                    onClick={() => {
+                      sortDATA(fullData, "status", "string", order);
+                    }}
+                  >
+                    Status
+                  </th>
+                  <th
+                    onClick={() => {
+                      sortDATA(fullData, "type", "string", order);
+                    }}
+                  >
+                    Type
+                  </th>
+                  <th
+                    onClick={() => {
+                      sortDATA(fullData, "amount", "num", order);
+                    }}
+                  >
+                    Amount
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {data.map((req, ind) => {
+                {fullData?.map((req, ind) => {
                   return (
-                    <tr>
+                    <tr key={ind}>
                       <td>
                         <Link to="/table-bootstrap-basic">{ind + 1}</Link>
                       </td>
 
                       <td>
                         <span className="text-muted">
-                          {req?.request_status == "Pending"
-                            ? moment(req?.created_at).format(
+                          {req?.status == "Pending"
+                            ? moment(req?.requested_at).format(
                                 "YYYY-MM-DD hh:mm a"
                               )
-                            : moment(req?.updated_at).format(
+                            : moment(req?.requested_at).format(
                                 "YYYY-MM-DD hh:mm a"
                               )}
                         </span>
@@ -58,19 +119,31 @@ function TransactionHistory() {
                       <td>
                         <Badge
                           variant={`${
-                            req?.request_status === "Rejected"
+                            req?.status === "Rejected"
                               ? "danger light"
-                              : req?.request_status === "Approved"
+                              : req?.status === "Approved"
                               ? "primary light"
                               : "warning light"
                           }`}
                           style={{ width: 80 }}
                         >
-                          {req?.request_status}
+                          {req?.status}
                         </Badge>
                       </td>
                       <td>{req?.type}</td>
-                      <td>$ {req?.amount}</td>
+                      <td>
+                        <CurrencyFormat
+                          value={req?.amount}
+                          displayType={"text"}
+                          // decimalSeparator={true}
+                          decimalScale={2}
+                          thousandSeparator={true}
+                          prefix={"$"}
+                          fixedDecimalScale={true}
+                          renderText={(value) => <span>{value} </span>}
+                        />
+                        {/* $ {req?.amount} */}
+                      </td>
                     </tr>
                   );
                 })}

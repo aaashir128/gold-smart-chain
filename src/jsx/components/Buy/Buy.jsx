@@ -6,27 +6,32 @@ import PageTitle from "../../layouts/PageTitle";
 import axios from "axios";
 import { baseURL } from "../../../Strings/Strings";
 import standCoin from "../../../images/stand.png";
+import solidCoin from "../../../images/solid.png";
+import CurrencyFormat from "react-currency-format";
+import styles from "./Buy.module.scss";
 
 function Buy(props) {
   const [amount, setAmount] = useState(0);
   const [address, setAddress] = useState(0);
+  const [coin, setCoin] = useState();
+  const [solidValue, setSolidValue] = useState(0);
   const [data, setData] = useState([]);
   const tokn = JSON.parse(localStorage.getItem("token"));
-  const [buyAmount, setBuyAmount] = useState({ usd: 10, stand: 1 });
+  const [buyAmount, setBuyAmount] = useState({ usd: 1, solid: 1 });
 
   const changeAmountUsd = (e) => {
     console.log("val", e.target.value);
     setBuyAmount({
       ...buyAmount,
       usd: Number(e.target.value),
-      stand: Number(e.target.value * 0.1),
+      solid: Number(e.target.value / solidValue),
     });
   };
-  const changeAmountStand = (e) => {
+  const changeAmountSolid = (e) => {
     setBuyAmount({
       ...buyAmount,
-      stand: Number(e.target.value),
-      usd: Number(e.target.value * 10),
+      solid: Number(e.target.value),
+      usd: Number(e.target.value * solidValue),
     });
   };
 
@@ -45,12 +50,12 @@ function Buy(props) {
 
       const postData = {
         user_id: usr?.id,
-        stand_coin: parseFloat(buyAmount.stand),
+        solid_coin: parseFloat(buyAmount.solid),
         invest_amount: parseFloat(buyAmount.usd),
       };
       console.log("postData", postData);
       const { data: st } = await axios
-        .post(`${baseURL}/api/standcoin/`, postData, {
+        .post(`${baseURL}/api/solidcoin/`, postData, {
           headers: { "x-auth-token": token },
         })
         // .then((res) => {
@@ -64,13 +69,14 @@ function Buy(props) {
           position: "top-right",
           autoClose: 5000,
           hideProgressBar: false,
-          closeOnClick: true,
+          closeOnClick: false,
           pauseOnHover: true,
           draggable: true,
+          onClose: () => props.history.push("/dashboard"),
         });
-        setTimeout(() => {
-          props.history.push("/dashboard");
-        }, 5000);
+        // setTimeout(() => {
+        //   props.history.push("/dashboard");
+        // }, 5000);
         // props.history.push("/dashboard");
       }
     } else {
@@ -87,20 +93,10 @@ function Buy(props) {
     }
   };
 
-  // const notifyTopRight = () => {
-  //   toast.success("✔️ Top Right !", {
-  //     position: "top-right",
-  //     autoClose: 5000,
-  //     hideProgressBar: false,
-  //     closeOnClick: true,
-  //     pauseOnHover: true,
-  //     draggable: true,
-  //   });
-  // };
-
   useEffect(() => {
     let usr = localStorage.getItem("user");
     usr = JSON.parse(usr);
+    console.log("token", tokn);
     axios
       .get(`${baseURL}/api/wallet/${usr?.id}`, {
         headers: { "x-auth-token": tokn },
@@ -112,6 +108,29 @@ function Buy(props) {
       .catch((e) => {
         console.log(e);
       });
+    axios
+      .get(`${baseURL}/api/solidcoin/${usr?.id}`, {
+        headers: { "x-auth-token": tokn },
+      })
+      .then((res) => {
+        // console.log(res, "resCoin");
+        setCoin(res?.data?.solid_coin);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    axios
+      .get(`${baseURL}/api/solidvalue`, {
+        headers: { "x-auth-token": tokn },
+      })
+      .then((res) => {
+        console.log("Message", res.data);
+        setSolidValue(res?.data?.value);
+        setBuyAmount({ ...buyAmount, solid: res?.data?.value });
+      })
+      .catch((e) => {
+        console.log("errorMessage", e.response.data);
+      });
   }, []);
   return (
     <>
@@ -120,13 +139,24 @@ function Buy(props) {
         <div className="col-xl-8 col-lg-8" style={{ marginTop: "0%" }}>
           <div className="card align-items-center justify-content-center">
             <div className="card-header ">
-              <h4 className="card-title ">Buy Stand Coin</h4>
+              <h4 className="card-title ">Buy Solid Coin</h4>
             </div>
             {/* <form onSubmit={(e) => notifyTopRight(e)}> */}
             <div className="col-xl-6 col-lg-6 m-auto border rounded p-4 my-4">
               <div className="d-flex justify-content-between">
                 <p>Spend</p>
-                <p>Available Limit: ${data?.balance}</p>
+                <p className="d-flex">
+                  Available:
+                  <CurrencyFormat
+                    value={data?.balance}
+                    displayType={"text"}
+                    decimalScale={2}
+                    thousandSeparator={true}
+                    prefix={"$"}
+                    fixedDecimalScale={true}
+                    renderText={(value) => <p>{value}</p>}
+                  />
+                </p>
               </div>
 
               <div className="d-flex justify-content-between">
@@ -136,48 +166,50 @@ function Buy(props) {
                   placeholder="1000"
                   className="border-0"
                 />
-                <Dropdown>
-                  <Dropdown.Toggle variant="light">$ USD</Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item href="#">EUR</Dropdown.Item>
-                    <Dropdown.Item href="#">JPY</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <div className={styles["tokenDiv"]}>
+                  <p>$USD</p>
+                </div>
               </div>
             </div>
 
             <div className="col-xl-6 col-lg-6 m-auto border rounded p-4 my-4">
               <div className="d-flex justify-content-between">
                 <p>Recieve</p>
+                <p>Available: {coin}</p>
               </div>
 
               <div className="d-flex justify-content-between">
                 <input
-                  value={buyAmount.stand}
-                  onChange={(e) => changeAmountStand(e)}
+                  value={buyAmount.solid}
+                  onChange={(e) => changeAmountSolid(e)}
                   placeholder="0.04"
                   className="border-0"
                 />
-                <Dropdown>
-                  <Dropdown.Toggle variant="light">
-                    <img
-                      src={standCoin}
-                      width="36px"
-                      height="36px"
-                      style={{ objectFit: "contain" }}
-                    />{" "}
-                    Stand
-                  </Dropdown.Toggle>
-                  {/* <Dropdown.Menu>
-                    <Dropdown.Item href="#">ETH</Dropdown.Item>
-                    <Dropdown.Item href="#">BNB</Dropdown.Item>
-                  </Dropdown.Menu> */}
-                </Dropdown>
+                <div className={styles["tokenDiv"]}>
+                  <img
+                    src={solidCoin}
+                    width="36px"
+                    height="36px"
+                    style={{ objectFit: "contain" }}
+                  />
+                  <p>Solid</p>
+                </div>
               </div>
             </div>
             <div className="col-xl-6 col-lg-6 m-auto  d-flex justify-content-between">
               <p>Price</p>
-              <p>$1 = 0.1g Gold</p>
+              <p className="d-flex">
+                1 Solid =
+                <CurrencyFormat
+                  value={solidValue}
+                  displayType={"text"}
+                  decimalScale={2}
+                  thousandSeparator={true}
+                  prefix={"$"}
+                  fixedDecimalScale={true}
+                  renderText={(value) => <p>{value}</p>}
+                />
+              </p>
             </div>
 
             <button

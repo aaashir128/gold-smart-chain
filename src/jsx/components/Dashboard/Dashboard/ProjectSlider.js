@@ -6,6 +6,7 @@ import axios from "axios";
 import { baseURL, tradeAPI } from "../../../../Strings/Strings";
 import standCoin from "../../../../images/stand.png";
 import solidToken from "../../../../images/solid.png";
+import CurrencyFormat from "react-currency-format";
 
 const ProjectSlider = (props) => {
   const [data, setData] = useState([]);
@@ -95,7 +96,18 @@ const ProjectSlider = (props) => {
                 >
                   <span className="mb-7 d-block fs-28 fw-bold">Stand Coin</span>
                   <span className="mb-0 d-block fs-22 text-start">
-                    <strong>{props?.coin}</strong>
+                    <strong>
+                      {props?.coin}
+                      {/* <CurrencyFormat
+                        value={props?.coin}
+                        displayType={"text"}
+                        decimalScale={2}
+                        thousandSeparator={true}
+                        prefix={"$"}
+                        fixedDecimalScale={true}
+                        renderText={(value) => <p>{value}</p>}
+                      /> */}
+                    </strong>
                   </span>
                 </div>
               </div>
@@ -133,7 +145,18 @@ const ProjectSlider = (props) => {
                   </span>
                   <span className="mb-0 d-block fs-22 text-start">
                     {/* <strong>{props?.token}</strong> */}
-                    <strong>{props?.solid}</strong>
+                    <strong>
+                      {props.solid}
+                      {/* <CurrencyFormat
+                        value={props?.solid}
+                        displayType={"text"}
+                        decimalScale={2}
+                        thousandSeparator={true}
+                        prefix={"$"}
+                        fixedDecimalScale={true}
+                        renderText={(value) => <p>{value}</p>}
+                      /> */}
+                    </strong>
                   </span>
                 </div>
               </div>

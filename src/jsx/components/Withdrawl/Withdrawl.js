@@ -12,7 +12,7 @@ function Withdrawl(props) {
   const notifyTopRight = async (e) => {
     e.preventDefault();
 
-    if (amount > 0) {
+    if (amount >= 0) {
       console.log("amount is sufficent");
       let token = await localStorage.getItem("token");
       token = JSON.parse(token);
@@ -25,24 +25,35 @@ function Withdrawl(props) {
       const postData = {
         user_id: usr?.id,
         amount: parseFloat(amount),
-        address: address,
       };
-      console.log("postData", postData);
+      // console.log("postData", postData);
       axios
-        .post(`${baseURL}/api/withdraw`, postData, {
+        .post(`${baseURL}/api/withdraw/`, postData, {
           headers: { "x-auth-token": token },
         })
         .then((res) => {
           console.log(res, "res");
-          toast.success("✔️ Deposit Request Initiated!", {
+          toast.success("✔️ Withdraw Request Initiated!", {
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
+            onClose: () => props.history.push("/dashboard"),
           });
-          props.history.push("/dashboard");
+        })
+        .catch((err) => {
+          console.log("err", err.response.data);
+          toast.error("❌ Invalid Amount", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         });
     } else {
       console.log("amount not sufficent");
@@ -101,20 +112,19 @@ function Withdrawl(props) {
                   </button>
                 </div>
               </form>
-
-              <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-              />
             </div>
           </div>
+          <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
         </div>
       </div>
     </>
