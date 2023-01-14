@@ -110,10 +110,10 @@ const Header = ({ onNote }) => {
                     />
                   </svg>
                   <span className="badge light text-white bg-blue rounded-circle">
-                    16
+                    0
                   </span>
                 </Dropdown.Toggle>
-                <Dropdown.Menu
+                {/* <Dropdown.Menu
                   align="right"
                   className="mt-2 dropdown-menu dropdown-menu-end"
                 >
@@ -216,7 +216,7 @@ const Header = ({ onNote }) => {
                   <Link className="all-notification" to="#">
                     See all notifications <i className="ti-arrow-right" />
                   </Link>
-                </Dropdown.Menu>
+                </Dropdown.Menu> */}
               </Dropdown>
 
               <Dropdown as="li" className="nav-item dropdown header-profile">
@@ -239,7 +239,7 @@ const Header = ({ onNote }) => {
                   align="right"
                   className="mt-3  mt-lg-0 dropdown-menu dropdown-menu-end"
                 >
-                  <Link to="/app-profile" className="dropdown-item ai-icon">
+                  <Link to="/profile" className="dropdown-item ai-icon">
                     <svg
                       id="icon-user1"
                       xmlns="http://www.w3.org/2000/svg"

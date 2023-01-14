@@ -104,7 +104,8 @@ function Register(props) {
 
   const validatePassword = (text) => {
     // console.log(text);
-    let reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+    let reg =
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[,./#?!@$%^&*-]).{8,}$/;
     if (reg.test(text) === false) {
       // console.log("Email is Not Correct");
       return false;

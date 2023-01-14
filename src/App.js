@@ -1,15 +1,17 @@
-import { lazy, Suspense, useEffect } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 
 /// Components
 import Index from "./jsx";
 import { connect, useDispatch } from "react-redux";
 import { Route, Switch, withRouter } from "react-router-dom";
 // action
-import { checkAutoLogin } from "./services/AuthService";
+import { checkAutoLogin, getUserData } from "./services/AuthService";
 import { isAuthenticated } from "./store/selectors/AuthSelectors";
 /// Style
 import "./vendor/bootstrap-select/dist/css/bootstrap-select.min.css";
 import "./css/style.css";
+import axios from "axios";
+import { baseURL } from "./Strings/Strings";
 
 const SignUp = lazy(() => import("./jsx/pages/Registration"));
 const ForgotPassword = lazy(() => import("./jsx/pages/ForgotPassword"));
@@ -20,7 +22,30 @@ const Login = lazy(() => {
 });
 
 function App(props) {
+  const [userData, setUserData] = useState([]);
   const dispatch = useDispatch();
+  const tokn = JSON.parse(localStorage.getItem("token"));
+
+  useEffect(() => {
+    let usr = localStorage.getItem("user");
+    usr = JSON.parse(usr);
+    axios
+      .get(`${baseURL}/api/user/${usr?.id}`, {
+        headers: { "x-auth-token": tokn },
+      })
+      .then((res) => {
+        // console.log(res, "res");
+        setUserData(res?.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
+  useEffect(() => {
+    getUserData(dispatch, userData);
+  }, [userData]);
+
   useEffect(() => {
     checkAutoLogin(dispatch, props.history);
     console.log(props.history);

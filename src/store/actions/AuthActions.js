@@ -10,6 +10,7 @@ export const SIGNUP_CONFIRMED_ACTION = "[signup action] confirmed signup";
 export const SIGNUP_FAILED_ACTION = "[signup action] failed signup";
 export const LOGIN_CONFIRMED_ACTION = "[login action] confirmed login";
 export const LOGIN_FAILED_ACTION = "[login action] failed login";
+export const GETTING_USER_DATA = "[get data] Getting User Data";
 export const LOADING_TOGGLE_ACTION = "[Loading action] toggle loading";
 export const LOGOUT_ACTION = "[Logout action] logout action";
 
@@ -51,6 +52,13 @@ export function loginAction(email, password, history) {
         const errorMessage = formatError(error.response.data);
         dispatch(loginFailedAction(errorMessage));
       });
+  };
+}
+
+export function gettingData(data) {
+  return {
+    type: GETTING_USER_DATA,
+    payload: data,
   };
 }
 

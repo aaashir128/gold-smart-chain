@@ -29,6 +29,11 @@ function Login(props) {
   const [errors, setErrors] = useState(errorsObj);
   const [password, setPassword] = useState("example123");
   // const [password, setPassword] = useState("123456");
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+    passwordCheck: true,
+  });
 
   const showModal = (hd, msg) => {
     setop(true);
@@ -38,68 +43,104 @@ function Login(props) {
 
   const dispatch = useDispatch();
 
+  const validatePassword = (text) => {
+    // console.log(text);
+    let reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[,./#?!@$%^&*-]).{8,}$/;
+    if (reg.test(text) === false) {
+      // console.log("Email is Not Correct");
+      return false;
+    } else {
+      // console.log("Email is Correct");
+      return true;
+    }
+  };
+
+  const focusChangePassword = () => {
+    console.log("Focus Changed", user.password);
+    const result = validatePassword(user.password);
+    setUser({
+      ...user,
+      passwordCheck: result,
+    });
+  };
+
+  const updatePassword = (e) => {
+    const result = validatePassword(e);
+    if (result) {
+      console.log("Password is Valid ");
+    } else {
+      console.log("Password is invalid ");
+    }
+    setUser({
+      ...user,
+      password: e,
+    });
+  };
+
   function onLogin(e) {
     e.preventDefault();
-    let error = false;
-    const errorObj = { ...errorsObj };
-    if (email === "") {
-      errorObj.email = "Email is Required";
-      error = true;
-    }
-    if (password === "") {
-      errorObj.password = "Password is Required";
-      error = true;
-    }
-    setErrors(errorObj);
-    if (error) {
-      return;
-    }
-    showModal("Loading", "Athenticating...");
+    if (user.passwordCheck) {
+      // let error = false;
+      // const errorObj = { ...errorsObj };
+      // if (email === "") {
+      //   errorObj.email = "Email is Required";
+      //   error = true;
+      // }
+      // if (password === "") {
+      //   errorObj.password = "Password is Required";
+      //   error = true;
+      // }
+      // setErrors(errorObj);
+      // if (error) {
+      //   return;
+      // }
+      showModal("Loading", "Athenticating...");
 
-    dispatch(loadingToggleAction(true));
-    // dispatch(loginAction(email, password, props.history));
+      dispatch(loadingToggleAction(true));
+      // dispatch(loginAction(email, password, props.history));
 
-    const postData = {
-      email,
-      password,
-    };
-    axios
-      .post(`${baseURL}/api/user/login`, postData)
-      .then((res) => {
-        //   console.log(res, "res");
-        const user = jwt_decode(res?.data?.access);
-        const token = res?.data?.access;
-        console.log(user, "user");
-        console.log(token, "token");
-        dispatch(loginConfirmedAction(user));
-        localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("token", JSON.stringify(token));
-        if (user?.is_admin == 1) {
-          props.history.push("/admin-dashboard");
-          window.location.replace("/admin-dashboard");
-        } else {
-          props.history.push("/dashboard");
-          window.location.replace("/dashboard");
-        }
-      })
-      .catch((e) => {
-        console.log(e);
-        toast.error("❌ Wrong credentials", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+      const postData = {
+        email: user.email,
+        password: user.password,
+      };
+      axios
+        .post(`${baseURL}/api/user/login`, postData)
+        .then((res) => {
+          //   console.log(res, "res");
+          const user = jwt_decode(res?.data?.access);
+          const token = res?.data?.access;
+          console.log(user, "user");
+          console.log(token, "token");
+          dispatch(loginConfirmedAction(user));
+          localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem("token", JSON.stringify(token));
+          if (user?.is_admin == 1) {
+            props.history.push("/admin-dashboard");
+            window.location.replace("/admin-dashboard");
+          } else {
+            props.history.push("/dashboard");
+            window.location.replace("/dashboard");
+          }
+        })
+        .catch((e) => {
+          console.log(e);
+          toast.error("❌ Wrong credentials", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
+          // showModal(
+          //   "Error!",
+          //   `❌ Error occured while Athenticating : ${
+          //     e.response.data ? e.response.data : "Unknown Error Occured."
+          //   }`
+          // );
         });
-        // showModal(
-        //   "Error!",
-        //   `❌ Error occured while Athenticating : ${
-        //     e.response.data ? e.response.data : "Unknown Error Occured."
-        //   }`
-        // );
-      });
+    }
   }
 
   //   const signInGoogle = () => {
@@ -172,8 +213,13 @@ function Login(props) {
                         <input
                           type="email"
                           className="form-control"
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
+                          value={user.email}
+                          onChange={(e) =>
+                            setUser({
+                              ...user,
+                              email: e.target.value,
+                            })
+                          }
                           placeholder="Type Your Email Address"
                         />
                       </div>
@@ -188,15 +234,24 @@ function Login(props) {
                       <input
                         type="password"
                         className="form-control"
-                        value={password}
+                        value={user.password}
+                        onChange={(e) => updatePassword(e.target.value)}
+                        onBlur={() => focusChangePassword()}
                         placeholder="Type Your Password"
-                        onChange={(e) => setPassword(e.target.value)}
                       />
-                      {errors.password && (
+                      {!user.passwordCheck && (
+                        <h5
+                          className="emailError text-center"
+                          style={{ color: "red" }}
+                        >
+                          Incorrect Passowrd
+                        </h5>
+                      )}
+                      {/* {errors.password && (
                         <div className="text-danger fs-12">
                           {errors.password}
                         </div>
-                      )}
+                      )} */}
                     </div>
                     <div className="form-row d-flex justify-content-between mt-4 mb-2">
                       <div className="form-group mb-3">

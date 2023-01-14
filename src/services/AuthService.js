@@ -1,6 +1,6 @@
 import axios from "axios";
 import swal from "sweetalert";
-import { loginConfirmedAction, logout } from "../store/actions/AuthActions";
+import { gettingData, loginConfirmedAction, logout } from "../store/actions/AuthActions";
 
 export function signUp(email, password) {
   //axios call
@@ -60,6 +60,9 @@ export function runLogoutTimer(dispatch, timer, history) {
   setTimeout(() => {
     dispatch(logout(history));
   }, timer);
+}
+export function getUserData(dispatch, user) {
+  dispatch(gettingData(user));
 }
 
 export function checkAutoLogin(dispatch, history) {

@@ -122,6 +122,7 @@ import DiscoverScreen from "./components/Discover Screen/DiscoverScreen";
 import Exchange from "./components/Exchange/Exchange";
 import Buy from "./components/Buy/Buy";
 import Sell from "./components/Sell/Sell";
+import Profile from "./components/Profile/Profile";
 
 const Markup = () => {
   let { coin } = useParams();
@@ -175,6 +176,7 @@ const Markup = () => {
 
     /// Apps
     { url: "app-profile", component: AppProfile },
+    { url: "profile", component: Profile },
     { url: "admin-dashboard", component: AdminDashboard },
     { url: "deposit-history", component: DepositHistory },
 
