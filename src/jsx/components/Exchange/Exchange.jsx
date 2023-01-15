@@ -243,9 +243,9 @@ function Buy(props) {
           <div className="card align-items-center justify-content-center">
             <div className="card-header ">
               {solidToStand ? (
-                <h4 className="card-title ">Exchange Solid with Stand</h4>
+                <h4 className="card-title ">Exchange SOLID with STAND</h4>
               ) : (
-                <h4 className="card-title ">Exchange Stand With Solid</h4>
+                <h4 className="card-title ">Exchange STAND with SOLID</h4>
               )}
             </div>
             {/* <form onSubmit={(e) => convertCoinAPI(e)}> */}
@@ -268,6 +268,7 @@ function Buy(props) {
 
                 <div className="d-flex justify-content-between">
                   <input
+                    type="number"
                     value={buyAmount.solid}
                     onChange={(e) => changeAmountSolid(e)}
                     placeholder="1000"
@@ -304,6 +305,7 @@ function Buy(props) {
                 <div className="d-flex justify-content-between">
                   <input
                     // disabled
+                    type="number"
                     value={buyAmount.stand}
                     onChange={(e) => changeAmountStand(e)}
                     placeholder="0.04"
@@ -328,22 +330,28 @@ function Buy(props) {
             {solidToStand ? (
               <div className="col-xl-6 col-lg-6 m-auto border rounded p-4 my-4 replace">
                 <div className="d-flex justify-content-between">
-                  <p>Recieve</p>
-                  {/* <p className="d-flex">
+                  <p>Receive</p>
+                  <p className="d-flex">
                     Available:
-                    <CurrencyFormat
-                      value={standCoin}
-                      displayType={"text"}
-                      decimalScale={2}
-                      thousandSeparator={true}
-                      fixedDecimalScale={true}
-                      renderText={(value) => <p>{value}</p>}
-                    />
-                  </p> */}
+                    {standCoin >= 1 ? (
+                      <CurrencyFormat
+                        value={standCoin}
+                        displayType={"text"}
+                        decimalScale={2}
+                        thousandSeparator={true}
+                        // prefix={"$"}
+                        fixedDecimalScale={true}
+                        renderText={(value) => <p>{value}</p>}
+                      />
+                    ) : (
+                      0
+                    )}
+                  </p>
                 </div>
 
                 <div className="d-flex justify-content-between">
                   <input
+                    type="number"
                     disabled
                     value={buyAmount.stand}
                     onChange={(e) => changeAmountStand(e)}
@@ -365,8 +373,8 @@ function Buy(props) {
             ) : (
               <div className="col-xl-6 col-lg-6 m-auto border rounded p-4 my-4 replace">
                 <div className="d-flex justify-content-between">
-                  <p>Recieve</p>
-                  {/* <p className="d-flex">
+                  <p>Receive</p>
+                  <p className="d-flex">
                     Available:
                     <CurrencyFormat
                       value={solidCoin}
@@ -376,11 +384,12 @@ function Buy(props) {
                       fixedDecimalScale={true}
                       renderText={(value) => <p>{value}</p>}
                     />
-                  </p> */}
+                  </p>
                 </div>
 
                 <div className="d-flex justify-content-between">
                   <input
+                    type="number"
                     disabled
                     value={buyAmount.solid}
                     onChange={(e) => changeAmountSolid(e)}

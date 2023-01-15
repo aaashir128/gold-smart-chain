@@ -70,12 +70,12 @@ function Withdrawl(props) {
   };
   return (
     <>
-      <PageTitle motherMenu="Home" activeMenu="Withdrawl" />
+      <PageTitle motherMenu="Home" activeMenu="Withdrawal" />
       <div className="d-flex align-items-center justify-content-center">
         <div className="col-xl-8 col-lg-8" style={{ marginTop: "10%" }}>
           <div className="card">
             <div className="card-header">
-              <h4 className="card-title">Withdraw Amount</h4>
+              <h4 className="card-title">Withdrawal Amount</h4>
             </div>
             <div className="card-body">
               <form onSubmit={(e) => notifyTopRight(e)}>
@@ -108,7 +108,7 @@ function Withdrawl(props) {
                     className="btn btn-primary mt-4"
                     style={{ width: "120px" }}
                   >
-                    Withdrawl
+                    Withdraw
                   </button>
                 </div>
               </form>

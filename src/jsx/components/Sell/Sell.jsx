@@ -141,7 +141,7 @@ function Sell(props) {
         <div className="col-xl-8 col-lg-8" style={{ marginTop: "0%" }}>
           <div className="card align-items-center justify-content-center">
             <div className="card-header ">
-              <h4 className="card-title ">Sell Stand Coin</h4>
+              <h4 className="card-title ">Sell STAND coin</h4>
             </div>
 
             <div className="col-xl-6 col-lg-6 m-auto border rounded p-4 my-4">
@@ -149,20 +149,25 @@ function Sell(props) {
                 <p>Sell</p>
                 <p className="d-flex">
                   Available:{" "}
-                  <CurrencyFormat
-                    value={coin?.solid_coin}
-                    displayType={"text"}
-                    decimalScale={2}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                    fixedDecimalScale={true}
-                    renderText={(value) => <p>{value}</p>}
-                  />
+                  {coin?.solid_coin >= 1 ? (
+                    <CurrencyFormat
+                      value={coin?.solid_coin}
+                      displayType={"text"}
+                      decimalScale={2}
+                      thousandSeparator={true}
+                      // prefix={"$"}
+                      fixedDecimalScale={true}
+                      renderText={(value) => <p>{value}</p>}
+                    />
+                  ) : (
+                    0
+                  )}
                 </p>
               </div>
 
               <div className="d-flex justify-content-between">
                 <input
+                  type="number"
                   placeholder="0.04"
                   className="border-0"
                   value={buyAmount.stand}
@@ -181,23 +186,28 @@ function Sell(props) {
             </div>
             <div className="col-xl-6 col-lg-6 m-auto border rounded p-4 my-4">
               <div className="d-flex justify-content-between">
-                <p>Recieve</p>
+                <p>Receive</p>
                 <p className="d-flex">
                   Available:{" "}
-                  <CurrencyFormat
-                    value={amount?.balance}
-                    displayType={"text"}
-                    decimalScale={2}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                    fixedDecimalScale={true}
-                    renderText={(value) => <p>{value}</p>}
-                  />
+                  {amount?.balance >= 1 ? (
+                    <CurrencyFormat
+                      value={amount?.balance}
+                      displayType={"text"}
+                      decimalScale={2}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                      fixedDecimalScale={true}
+                      renderText={(value) => <p>{value}</p>}
+                    />
+                  ) : (
+                    0
+                  )}
                 </p>
               </div>
 
               <div className="d-flex justify-content-between">
                 <input
+                  type="number"
                   placeholder="1000"
                   className="border-0"
                   value={buyAmount.usd}

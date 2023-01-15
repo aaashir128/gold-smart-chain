@@ -9,6 +9,7 @@ import profile from "../../../images/user.jpg";
 import avatar from "../../../images/avatar/1.jpg";
 import { Dropdown } from "react-bootstrap";
 import LogoutPage from "./Logout";
+import { Avatar } from "@mui/material";
 
 const Header = ({ onNote }) => {
   const [searchBut, setSearchBut] = useState(false);
@@ -227,7 +228,8 @@ const Header = ({ onNote }) => {
                   role="button"
                   data-toggle="dropdown"
                 >
-                  <img src={profile} width={20} alt="" />
+                  {/* <img src={profile} width={20} alt="" /> */}
+                  <Avatar src={user?.username} alt={user?.username} />
                   <div className="header-info ms-3">
                     <span className="fs-18 font-w500 mb-2">
                       {user?.username}

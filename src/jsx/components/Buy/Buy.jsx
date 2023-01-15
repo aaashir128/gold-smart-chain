@@ -126,7 +126,7 @@ function Buy(props) {
       .then((res) => {
         console.log("Message", res.data);
         setSolidValue(res?.data?.value);
-        setBuyAmount({ ...buyAmount, solid: res?.data?.value });
+        setBuyAmount({ ...buyAmount, usd: res?.data?.value });
       })
       .catch((e) => {
         console.log("errorMessage", e.response.data);
@@ -139,7 +139,7 @@ function Buy(props) {
         <div className="col-xl-8 col-lg-8" style={{ marginTop: "0%" }}>
           <div className="card align-items-center justify-content-center">
             <div className="card-header ">
-              <h4 className="card-title ">Buy Solid Coin</h4>
+              <h4 className="card-title ">Buy SOLID token</h4>
             </div>
             {/* <form onSubmit={(e) => notifyTopRight(e)}> */}
             <div className="col-xl-6 col-lg-6 m-auto border rounded p-4 my-4">
@@ -147,20 +147,25 @@ function Buy(props) {
                 <p>Spend</p>
                 <p className="d-flex">
                   Available:
-                  <CurrencyFormat
-                    value={data?.balance}
-                    displayType={"text"}
-                    decimalScale={2}
-                    thousandSeparator={true}
-                    prefix={"$"}
-                    fixedDecimalScale={true}
-                    renderText={(value) => <p>{value}</p>}
-                  />
+                  {data?.balance >= 1 ? (
+                    <CurrencyFormat
+                      value={data?.balance}
+                      displayType={"text"}
+                      decimalScale={2}
+                      thousandSeparator={true}
+                      prefix={"$"}
+                      fixedDecimalScale={true}
+                      renderText={(value) => <p>{value}</p>}
+                    />
+                  ) : (
+                    0
+                  )}
                 </p>
               </div>
 
               <div className="d-flex justify-content-between">
                 <input
+                  type="number"
                   value={buyAmount.usd}
                   onChange={(e) => changeAmountUsd(e)}
                   placeholder="1000"
@@ -174,12 +179,13 @@ function Buy(props) {
 
             <div className="col-xl-6 col-lg-6 m-auto border rounded p-4 my-4">
               <div className="d-flex justify-content-between">
-                <p>Recieve</p>
-                <p>Available: {coin}</p>
+                <p>Receive</p>
+                <p>Available: {coin >= 1 ? coin : 0}</p>
               </div>
 
               <div className="d-flex justify-content-between">
                 <input
+                  type="number"
                   value={buyAmount.solid}
                   onChange={(e) => changeAmountSolid(e)}
                   placeholder="0.04"

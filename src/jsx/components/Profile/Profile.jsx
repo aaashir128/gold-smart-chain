@@ -1,4 +1,4 @@
-import { Edit } from "@mui/icons-material";
+import { Edit, PersonPin } from "@mui/icons-material";
 import axios from "axios";
 import React, { Fragment, useRef, useState } from "react";
 import { Button, Dropdown, Modal } from "react-bootstrap";
@@ -14,6 +14,8 @@ import { baseURL } from "../../../Strings/Strings";
 import PageTitle from "../../layouts/PageTitle";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../store/actions/AuthActions";
+import { Avatar } from "@mui/material";
+import { useEffect } from "react";
 
 const Profile = (props) => {
   const dispatch = useDispatch();
@@ -39,6 +41,12 @@ const Profile = (props) => {
   });
 
   console.log("props", props);
+  const [user, setUser] = useState(null);
+
+  useEffect(async () => {
+    const usr = await localStorage.getItem("user");
+    setUser(JSON.parse(usr));
+  }, []);
 
   let usr = localStorage.getItem("user");
   usr = JSON.parse(usr);
@@ -194,14 +202,32 @@ const Profile = (props) => {
       <PageTitle activeMenu="Profile" motherMenu="App" />
 
       <div className="row">
-        <div className="col-lg-12">
-          <div className="profile card card-body px-3 pt-3 pb-0">
+        <div className="col-lg-12 d-flex justify-content-center my-4">
+          <Avatar
+            src={user?.username}
+            alt={user?.username}
+            sx={{
+              width: "64px",
+              height: "64px",
+              objectFit: "contain",
+              fontSize: "24px",
+            }}
+          />
+          {/* <div className="profile card card-body px-3 pt-3 pb-0">
             <div className="profile-head">
               <div className="photo-content ">
                 <div className="cover-photo rounded"></div>
               </div>
               <div className="profile-info">
                 <div className="profile-photo">
+                  <Avatar
+                    sx={{
+                      width: "64px",
+                      height: "64px",
+                      objectFit: "contain",
+                    }}
+                    color={"info"}
+                  />
                   <img
                     src={profile}
                     className="img-fluid rounded-circle"
@@ -210,7 +236,7 @@ const Profile = (props) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
       <div className="col-xl-12 col-lg-12">

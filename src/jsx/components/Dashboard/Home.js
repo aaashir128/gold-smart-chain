@@ -137,12 +137,12 @@ const Home = (props) => {
             <div className="row">
               <div className="col-xl-12 col-md-12">
                 <div className="row">
-                  <div className="col-xl-8 col-lg-8 col-md-8 ">
+                  <div className="col-xl-12 col-lg-12 col-md-12 ">
                     <TransactionHistory />
                   </div>
-                  <div className="card col-xl-4 col-lg-4 col-md-4 ">
+                  {/* <div className="card col-xl-4 col-lg-4 col-md-4 ">
                     <ChartBarApex />
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
