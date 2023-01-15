@@ -35,6 +35,7 @@ const Profile = (props) => {
     userName: "",
     contact: "",
     email: "",
+    emailCheck: true,
   });
 
   console.log("props", props);
@@ -67,6 +68,27 @@ const Profile = (props) => {
     setProfilePassword({
       ...profilePassword,
       newPassword: e,
+    });
+  };
+
+  const validateEmail = (text) => {
+    // console.log(text);
+    let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w\w+)+$/;
+    if (reg.test(text) === false) {
+      // console.log("Email is Not Correct");
+      return false;
+    } else {
+      // console.log("Email is Correct");
+      return true;
+    }
+  };
+
+  const focusChangeEmail = () => {
+    const result = validateEmail(profileInfo.email);
+
+    setProfileInfo({
+      ...profileInfo,
+      emailCheck: result,
     });
   };
 
@@ -264,6 +286,7 @@ const Profile = (props) => {
                     <h5>Email</h5>
                     <input
                       value={profileInfo.email}
+                      onBlur={focusChangeEmail}
                       onChange={(e) =>
                         setProfileInfo({
                           ...profileInfo,
@@ -275,6 +298,11 @@ const Profile = (props) => {
                       placeholder="jodoe@gsc.com"
                     />
                   </div>
+                  {!profileInfo.emailCheck && (
+                    <h5 className="emailError" style={{ color: "red" }}>
+                      Not a valid e-mail address
+                    </h5>
+                  )}
                 </div>
 
                 <div className="text-center my-4">

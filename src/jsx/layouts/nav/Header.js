@@ -63,7 +63,7 @@ const Header = ({ onNote }) => {
 				</div> */}
             </div>
             <div className="header-mid">
-              <div className="w-90 input-group search-area center">
+              {/* <div className="w-90 input-group search-area center">
                 <input
                   type="text"
                   className={`form-control ${searchBut ? "active" : ""}`}
@@ -77,7 +77,7 @@ const Header = ({ onNote }) => {
                     <i className="flaticon-381-search-2"></i>
                   </Link>
                 </span>
-              </div>
+              </div> */}
             </div>
             <ul className="navbar-nav header-right w-90">
               <li className="nav-item d-flex align-items-center"></li>

@@ -50,7 +50,7 @@ function TransactionHistory() {
   useEffect(() => {
     setfullData([...data, ...deposit]);
   }, [data, deposit]);
-
+  console.log("fullData", fullData);
   const sortDATA = (arr, elem, type, order) => {
     setfullData(sortArray(arr, elem, type, order));
     order == "ASC" ? setorder("DESC") : setorder("ASC");
@@ -119,15 +119,16 @@ function TransactionHistory() {
                       <td>
                         <Badge
                           variant={`${
-                            req?.status === "Rejected"
+                            req?.status === "rejected"
                               ? "danger light"
-                              : req?.status === "Approved"
-                              ? "primary light"
+                              : req?.status === "approved"
+                              ? "success light"
                               : "warning light"
                           }`}
                           style={{ width: 80 }}
                         >
-                          {req?.status}
+                          {req?.status.slice(0, 1).toUpperCase() +
+                            req?.status.slice(1)}
                         </Badge>
                       </td>
                       <td>{req?.type}</td>

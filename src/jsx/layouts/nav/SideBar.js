@@ -220,13 +220,12 @@ const SideBar = () => {
               <span className="nav-text">Exchange</span>
             </Link>
           </li>
-          <li className={`${settings.includes(path) ? "mm-active" : ""}`}>
+          {/* <li className={`${settings.includes(path) ? "mm-active" : ""}`}>
             <Link to="/settings" className="ai-icon">
-              {/* <i className="fas fa-chart-line"></i> */}
               <Settings fontSize="large" />
               <span className="nav-text">Settings</span>
             </Link>
-          </li>
+          </li> */}
           {/* <li className={`${pages.includes(path) ? "mm-active" : ""}`}>
             <Link to="/trade-history" className="ai-icon">
               <i className="fas fa-chart-line"></i>

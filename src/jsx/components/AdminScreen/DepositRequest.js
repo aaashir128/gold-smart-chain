@@ -376,12 +376,13 @@ function DepositRequest() {
                               variant={`${
                                 req?.status === "canceled"
                                   ? "danger light"
-                                  : req?.status === "accepted"
-                                  ? "primary light"
+                                  : req?.status === "approved"
+                                  ? "success light"
                                   : "warning light"
                               }`}
                             >
-                              {req?.status}
+                              {req?.status.slice(0, 1).toUpperCase() +
+                                req?.status.slice(1)}
                             </Badge>
                           </td>
                           <td>

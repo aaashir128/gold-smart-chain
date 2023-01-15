@@ -90,6 +90,16 @@ function Register(props) {
     });
   };
 
+  const focusChangeEmail = () => {
+    console.log("Focus Changed");
+    const result = validateEmail(user.email);
+
+    setUser({
+      ...user,
+      emailCheck: result,
+    });
+  };
+
   const validateEmail = (text) => {
     // console.log(text);
     let reg = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w\w+)+$/;
@@ -248,6 +258,7 @@ function Register(props) {
                         </label>
                         <input
                           value={user.email}
+                          onBlur={focusChangeEmail}
                           onChange={(e) =>
                             setUser({
                               ...user,
@@ -258,6 +269,11 @@ function Register(props) {
                           placeholder="Email"
                         />
                       </div>
+                      {!user.emailCheck && (
+                        <h5 className="emailError" style={{ color: "red" }}>
+                          Not a valid e-mail address
+                        </h5>
+                      )}
 
                       {errors.email && <div>{errors.email}</div>}
                       <div className="form-group mb-3">
