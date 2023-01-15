@@ -38,42 +38,54 @@ function Sell(props) {
   const notifyTopRight = async (e) => {
     e.preventDefault();
 
-    if (buyAmount.solid >= 0 || buyAmount.usd >= 0) {
-      console.log("amount is sufficent");
-      let token = await localStorage.getItem("token");
-      token = JSON.parse(token);
-      console.log("token", token);
+    if (coin?.solid_coin >= 1) {
+      if (buyAmount.solid >= 0 || buyAmount.usd >= 0) {
+        console.log("amount is sufficent");
+        let token = await localStorage.getItem("token");
+        token = JSON.parse(token);
+        console.log("token", token);
 
-      let usr = await localStorage.getItem("user");
-      usr = JSON.parse(usr);
-      console.log("usr", usr);
+        let usr = await localStorage.getItem("user");
+        usr = JSON.parse(usr);
+        console.log("usr", usr);
 
-      const postData = {
-        solid_coin: parseFloat(buyAmount.solid),
-      };
-      console.log("postData", postData);
-      axios
-        .put(`${baseURL}/api/solidcoin/${coin.id}`, postData, {
-          headers: { "x-auth-token": token },
-        })
-        .then((res) => {
-          console.log(res, "res");
-          toast.success("✔️ Coin Sold!", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            onClose: () => props.history.push("/dashboard"),
+        const postData = {
+          solid_coin: parseFloat(buyAmount.solid),
+        };
+        console.log("postData", postData);
+        axios
+          .put(`${baseURL}/api/solidcoin/${coin.id}`, postData, {
+            headers: { "x-auth-token": token },
+          })
+          .then((res) => {
+            console.log(res, "res");
+            toast.success("✔️ Coin Sold!", {
+              position: "top-right",
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              onClose: () => props.history.push("/dashboard"),
+            });
+          })
+          .catch((err) => {
+            console.log("err", err.response.data);
           });
-        })
-        .catch((err) => {
-          console.log("err", err.response.data);
+      } else {
+        console.log("amount not sufficent");
+        toast.error("❌ Invalid Amount", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
         });
+      }
     } else {
-      console.log("amount not sufficent");
-      toast.error("❌ Invalid Amount", {
+      toast.error("❌ insufficient Amount", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -141,14 +153,14 @@ function Sell(props) {
         <div className="col-xl-8 col-lg-8" style={{ marginTop: "0%" }}>
           <div className="card align-items-center justify-content-center">
             <div className="card-header ">
-              <h4 className="card-title ">Sell STAND coin</h4>
+              <h4 className="card-title ">Sell SOLID token</h4>
             </div>
 
             <div className="col-xl-6 col-lg-6 m-auto border rounded p-4 my-4">
               <div className="d-flex justify-content-between">
                 <p>Sell</p>
                 <p className="d-flex">
-                  Available:{" "}
+                  <p className="mx-1">Available:</p>
                   {coin?.solid_coin >= 1 ? (
                     <CurrencyFormat
                       value={coin?.solid_coin}
@@ -160,7 +172,7 @@ function Sell(props) {
                       renderText={(value) => <p>{value}</p>}
                     />
                   ) : (
-                    0
+                    "0.00"
                   )}
                 </p>
               </div>
@@ -188,7 +200,7 @@ function Sell(props) {
               <div className="d-flex justify-content-between">
                 <p>Receive</p>
                 <p className="d-flex">
-                  Available:{" "}
+                  <p className="mx-1">Available:</p>
                   {amount?.balance >= 1 ? (
                     <CurrencyFormat
                       value={amount?.balance}
@@ -200,7 +212,7 @@ function Sell(props) {
                       renderText={(value) => <p>{value}</p>}
                     />
                   ) : (
-                    0
+                    "0.00"
                   )}
                 </p>
               </div>

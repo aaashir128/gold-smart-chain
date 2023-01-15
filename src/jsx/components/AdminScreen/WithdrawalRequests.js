@@ -23,7 +23,7 @@ import {
 } from "../../../Strings/Strings";
 import PageTitle from "../../layouts/PageTitle";
 
-function WithdrawalRequests() {
+function WithdrawalRequests(props) {
   const [modalCentered, setModalCentered] = useState(false);
   const [data, setData] = useState([]);
   const [token, setToken] = useState(null);
@@ -34,6 +34,14 @@ function WithdrawalRequests() {
   const sort = 10;
 
   const activePag = useRef(0);
+
+  const usr = JSON.parse(localStorage.getItem("user"));
+  useEffect(async () => {
+    console.log("usr", usr);
+    if (!usr.is_admin) {
+      props.history.push("/dashboard");
+    }
+  }, [usr]);
   const chageData = (frist, sec) => {
     for (var i = 0; i < data?.length; ++i) {
       if (i >= frist && i < sec) {
@@ -159,7 +167,7 @@ function WithdrawalRequests() {
                           </td>
                           <td>
                             {/* {req?.user?.firstName + " " + req?.user?.lastName} */}
-                            {req?.user_id}
+                            {req?.user.user_name}
                           </td>
                           {/* <td>$ {req?.amount?.toFixed(2)}</td> */}
                           <td>
@@ -332,7 +340,7 @@ function WithdrawalRequests() {
                           </td>
                           <td>
                             {/* {req?.user?.firstName + " " + req?.user?.lastName} */}
-                            {req?.user_id}
+                            {req?.user.user_name}
                           </td>
                           {/* <td>$ {req?.amount?.toFixed(2)}</td> */}
                           <td>

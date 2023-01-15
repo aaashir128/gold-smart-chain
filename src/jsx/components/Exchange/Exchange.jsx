@@ -254,6 +254,22 @@ function Buy(props) {
                 <div className="d-flex justify-content-between">
                   <p>Spend</p>
                   <p className="d-flex">
+                    <p className="mx-1">Available:</p>
+                    {solidCoin >= 1 ? (
+                      <CurrencyFormat
+                        value={solidCoin}
+                        displayType={"text"}
+                        decimalScale={2}
+                        thousandSeparator={true}
+                        // prefix={"$"}
+                        fixedDecimalScale={true}
+                        renderText={(value) => <p>{value}</p>}
+                      />
+                    ) : (
+                      "0.00"
+                    )}
+                  </p>
+                  {/* <p className="d-flex">
                     Available Limit:
                     <CurrencyFormat
                       value={solidCoin}
@@ -263,7 +279,7 @@ function Buy(props) {
                       fixedDecimalScale={true}
                       renderText={(value) => <p>{value}</p>}
                     />
-                  </p>
+                  </p> */}
                 </div>
 
                 <div className="d-flex justify-content-between">
@@ -290,6 +306,22 @@ function Buy(props) {
                 <div className="d-flex justify-content-between">
                   <p>Spend</p>
                   <p className="d-flex">
+                    <p className="mx-1">Available:</p>
+                    {standCoin.exchange_coin_amount >= 1 ? (
+                      <CurrencyFormat
+                        value={standCoin.exchange_coin_amount}
+                        displayType={"text"}
+                        decimalScale={2}
+                        thousandSeparator={true}
+                        // prefix={"$"}
+                        fixedDecimalScale={true}
+                        renderText={(value) => <p>{value}</p>}
+                      />
+                    ) : (
+                      "0.00"
+                    )}
+                  </p>
+                  {/* <p className="d-flex">
                     Available Limit:
                     <CurrencyFormat
                       value={standCoin.exchange_coin_amount}
@@ -299,7 +331,7 @@ function Buy(props) {
                       fixedDecimalScale={true}
                       renderText={(value) => <p>{value}</p>}
                     />
-                  </p>
+                  </p> */}
                 </div>
 
                 <div className="d-flex justify-content-between">
@@ -331,7 +363,24 @@ function Buy(props) {
               <div className="col-xl-6 col-lg-6 m-auto border rounded p-4 my-4 replace">
                 <div className="d-flex justify-content-between">
                   <p>Receive</p>
+
                   <p className="d-flex">
+                    <p className="mx-1">Available:</p>
+                    {standCoin >= 1 ? (
+                      <CurrencyFormat
+                        value={standCoin}
+                        displayType={"text"}
+                        decimalScale={2}
+                        thousandSeparator={true}
+                        // prefix={"$"}
+                        fixedDecimalScale={true}
+                        renderText={(value) => <p>{value}</p>}
+                      />
+                    ) : (
+                      "0.00"
+                    )}
+                  </p>
+                  {/* <p className="d-flex">
                     Available:
                     {standCoin >= 1 ? (
                       <CurrencyFormat
@@ -346,7 +395,7 @@ function Buy(props) {
                     ) : (
                       0
                     )}
-                  </p>
+                  </p> */}
                 </div>
 
                 <div className="d-flex justify-content-between">
@@ -375,6 +424,22 @@ function Buy(props) {
                 <div className="d-flex justify-content-between">
                   <p>Receive</p>
                   <p className="d-flex">
+                    <p className="mx-1">Available:</p>
+                    {solidCoin >= 1 ? (
+                      <CurrencyFormat
+                        value={solidCoin}
+                        displayType={"text"}
+                        decimalScale={2}
+                        thousandSeparator={true}
+                        // prefix={"$"}
+                        fixedDecimalScale={true}
+                        renderText={(value) => <p>{value}</p>}
+                      />
+                    ) : (
+                      "0.00"
+                    )}
+                  </p>
+                  {/* <p className="d-flex">
                     Available:
                     <CurrencyFormat
                       value={solidCoin}
@@ -384,7 +449,7 @@ function Buy(props) {
                       fixedDecimalScale={true}
                       renderText={(value) => <p>{value}</p>}
                     />
-                  </p>
+                  </p> */}
                 </div>
 
                 <div className="d-flex justify-content-between">

@@ -119,7 +119,7 @@ function TransactionHistory() {
                       <td>
                         <Badge
                           variant={`${
-                            req?.status === "rejected"
+                            req?.status === "canceled"
                               ? "danger light"
                               : req?.status === "approved"
                               ? "success light"

@@ -11,6 +11,14 @@ function CommissionSettings(props) {
   const [isEditInput, setIsEditInput] = useState(false);
   const token = JSON.parse(localStorage.getItem("token"));
 
+  const usr = JSON.parse(localStorage.getItem("user"));
+  useEffect(async () => {
+    console.log("usr", usr);
+    if (!usr.is_admin) {
+      props.history.push("/dashboard");
+    }
+  }, [usr]);
+
   const changeEditInput = () => {
     setIsEditInput(true);
   };

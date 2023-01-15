@@ -146,7 +146,7 @@ function Buy(props) {
               <div className="d-flex justify-content-between">
                 <p>Spend</p>
                 <p className="d-flex">
-                  Available:
+                  <p className="mx-1">Available:</p>
                   {data?.balance >= 1 ? (
                     <CurrencyFormat
                       value={data?.balance}
@@ -158,7 +158,7 @@ function Buy(props) {
                       renderText={(value) => <p>{value}</p>}
                     />
                   ) : (
-                    0
+                    "0.00"
                   )}
                 </p>
               </div>
@@ -180,8 +180,42 @@ function Buy(props) {
             <div className="col-xl-6 col-lg-6 m-auto border rounded p-4 my-4">
               <div className="d-flex justify-content-between">
                 <p>Receive</p>
-                <p>Available: {coin >= 1 ? coin : 0}</p>
+                <p className="d-flex">
+                  <p className="mx-1">Available:</p>
+                  {coin >= 1 ? (
+                    <CurrencyFormat
+                      value={coin}
+                      displayType={"text"}
+                      decimalScale={2}
+                      thousandSeparator={true}
+                      // prefix={"$"}
+                      fixedDecimalScale={true}
+                      renderText={(value) => <p>{value}</p>}
+                    />
+                  ) : (
+                    "0.00"
+                  )}
+                </p>
               </div>
+              {/* <div className="d-flex justify-content-between">
+                <p>Receive</p>
+                <div className="d-flex">
+                  <p className="mx-1">Available:</p>
+                  {coin >= 1 ? (
+                    <CurrencyFormat
+                      value={coin}
+                      displayType={"text"}
+                      decimalScale={2}
+                      thousandSeparator={true}
+                      // prefix={"$"}
+                      fixedDecimalScale={true}
+                      renderText={(value) => <p>{value}</p>}
+                    />
+                  ) : (
+                    "0.00"
+                  )}
+                </div>
+              </div> */}
 
               <div className="d-flex justify-content-between">
                 <input

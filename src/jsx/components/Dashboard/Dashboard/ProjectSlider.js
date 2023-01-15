@@ -97,7 +97,18 @@ const ProjectSlider = (props) => {
                   <span className="mb-7 d-block fs-28 fw-bold">Stand Coin</span>
                   <span className="mb-0 d-block fs-22 text-start">
                     <strong>
-                      {props?.coin >= 1 ? props?.coin : 0}
+                      {props?.coin >= 1 ? (
+                        <CurrencyFormat
+                          value={props?.coin}
+                          displayType={"text"}
+                          decimalScale={2}
+                          thousandSeparator={true}
+                          fixedDecimalScale={true}
+                          renderText={(value) => <p>{value}</p>}
+                        />
+                      ) : (
+                        "0.00"
+                      )}
                       {/* <CurrencyFormat
                         value={props?.coin}
                         displayType={"text"}
@@ -146,7 +157,18 @@ const ProjectSlider = (props) => {
                   <span className="mb-0 d-block fs-22 text-start">
                     {/* <strong>{props?.token}</strong> */}
                     <strong>
-                      {props?.solid >= 1 ? props?.solid : 0}
+                      {props?.solid >= 1 ? (
+                        <CurrencyFormat
+                          value={props?.solid}
+                          displayType={"text"}
+                          decimalScale={2}
+                          thousandSeparator={true}
+                          fixedDecimalScale={true}
+                          renderText={(value) => <p>{value}</p>}
+                        />
+                      ) : (
+                        "0.00"
+                      )}
 
                       {/* <CurrencyFormat
                         value={props?.solid}

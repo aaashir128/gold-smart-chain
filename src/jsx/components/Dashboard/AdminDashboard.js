@@ -1,6 +1,6 @@
 import loadable from "@loadable/component";
 import pMinDelay from "p-min-delay";
-import React from "react";
+import React, { useEffect } from "react";
 import { Row, Dropdown } from "react-bootstrap";
 
 import PageTitle from "../../layouts/PageTitle";
@@ -41,7 +41,14 @@ function Dropdownblog() {
     </Dropdown>
   );
 }
-const AdminDashboard = () => {
+const AdminDashboard = (props) => {
+  const usr = JSON.parse(localStorage.getItem("user"));
+  useEffect(async () => {
+    console.log("usr", usr);
+    if (!usr.is_admin) {
+      props.history.push("/dashboard");
+    }
+  }, [usr]);
   const data = {
     datasets: [
       {

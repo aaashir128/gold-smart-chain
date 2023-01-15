@@ -19,7 +19,7 @@ import {
 } from "../../../Strings/Strings";
 import PageTitle from "../../layouts/PageTitle";
 
-function DepositRequest() {
+function DepositRequest(props) {
   const [modalCentered, setModalCentered] = useState(false);
   const [pendingData, setPendingData] = useState([]);
   const [otherData, setOtherData] = useState([]);
@@ -40,6 +40,14 @@ function DepositRequest() {
       }
     }
   };
+
+  const usr = JSON.parse(localStorage.getItem("user"));
+  useEffect(async () => {
+    console.log("usr", usr);
+    if (!usr.is_admin) {
+      props.history.push("/dashboard");
+    }
+  }, [usr]);
 
   activePag.current === 0 && chageData(0, sort);
   let paggination = Array(Math.ceil(pendingData?.length / sort))
@@ -174,7 +182,7 @@ function DepositRequest() {
                           </td>
                           <td>
                             {/* {req?.user?.firstName + " " + req?.user?.lastName} */}
-                            {req?.user_id}
+                            {req?.user.user_name}
                           </td>
                           {/* <td>$ {req?.amount?.toFixed(2)}</td> */}
                           <td>
@@ -345,7 +353,7 @@ function DepositRequest() {
                           </td>
                           <td>
                             {/* {req?.user?.firstName + " " + req?.user?.lastName} */}
-                            {req?.user_id}
+                            {req?.user.user_name}
                           </td>
                           {/* <td>$ {req?.amount?.toFixed(2)}</td> */}
                           <td>
