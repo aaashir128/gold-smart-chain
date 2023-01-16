@@ -17,6 +17,8 @@ const ProjectSlider = (props) => {
   const [solid, setSolid] = useState();
   const [isLoaded, setIsLoaded] = useState({ coin: false, token: false });
 
+  const tokn = JSON.parse(localStorage.getItem("user"));
+
   useEffect(() => {
     let usr = localStorage.getItem("user");
     usr = JSON.parse(usr);
@@ -135,9 +137,9 @@ const ProjectSlider = (props) => {
                       <Spinner animation="grow" />
                     ) : (
                       <strong>
-                        {coin > 0 ? (
+                        {props.coin > 0 ? (
                           <CurrencyFormat
-                            value={coin}
+                            value={props.coin}
                             displayType={"text"}
                             decimalScale={2}
                             thousandSeparator={true}
@@ -190,9 +192,9 @@ const ProjectSlider = (props) => {
                       <Spinner animation="grow" />
                     ) : (
                       <strong>
-                        {solid > 0 ? (
+                        {props.solid > 0 ? (
                           <CurrencyFormat
-                            value={solid}
+                            value={props.solid}
                             displayType={"text"}
                             decimalScale={2}
                             thousandSeparator={true}

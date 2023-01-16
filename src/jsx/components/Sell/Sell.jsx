@@ -38,7 +38,7 @@ function Sell(props) {
   const notifyTopRight = async (e) => {
     e.preventDefault();
 
-    if (coin?.solid_coin >= 1) {
+    if (coin?.solid_coin > 0 && buyAmount.solid <= coin?.solid_coin) {
       if (
         buyAmount.solid >= 0 &&
         buyAmount.usd >= 0 &&

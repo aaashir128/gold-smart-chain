@@ -371,9 +371,9 @@ function Buy(props) {
 
                   <p className="d-flex">
                     <p className="mx-1">Available:</p>
-                    {standCoin > 0 ? (
+                    {standCoin?.exchange_coin_amount > 0 ? (
                       <CurrencyFormat
-                        value={standCoin}
+                        value={standCoin?.exchange_coin_amount}
                         displayType={"text"}
                         decimalScale={2}
                         thousandSeparator={true}
