@@ -70,8 +70,13 @@ function Buy(props) {
 
   const convertCoinAPI = async (e) => {
     e.preventDefault();
-
-    if (buyAmount.stand > 0 && buyAmount.stand <= 100000) {
+    console.log("standAmount", buyAmount);
+    if (
+      buyAmount.stand > 0 ||
+      // buyAmount.stand <= 100000000000 ||
+      buyAmount.solid > 0 ||
+      buyAmount.solid <= 100000
+    ) {
       console.log("amount is sufficent");
       let token = await localStorage.getItem("token");
       token = JSON.parse(token);
@@ -262,9 +267,10 @@ function Buy(props) {
                     <p className="mx-1">Available:</p>
                     {solidCoin > 0 ? (
                       <CurrencyFormat
-                        value={solidCoin}
+                        // value={solidCoin}
+                        value={parseFloat(solidCoin).toFixed(4)}
                         displayType={"text"}
-                        decimalScale={2}
+                        // decimalScale={2}
                         thousandSeparator={true}
                         // prefix={"$"}
                         fixedDecimalScale={true}
@@ -314,9 +320,12 @@ function Buy(props) {
                     <p className="mx-1">Available:</p>
                     {standCoin.exchange_coin_amount > 0 ? (
                       <CurrencyFormat
-                        value={standCoin.exchange_coin_amount}
+                        // value={standCoin.exchange_coin_amount}
+                        value={parseFloat(
+                          standCoin.exchange_coin_amount
+                        ).toFixed(2)}
                         displayType={"text"}
-                        decimalScale={2}
+                        // decimalScale={2}
                         thousandSeparator={true}
                         // prefix={"$"}
                         fixedDecimalScale={true}
@@ -373,9 +382,12 @@ function Buy(props) {
                     <p className="mx-1">Available:</p>
                     {standCoin?.exchange_coin_amount > 0 ? (
                       <CurrencyFormat
-                        value={standCoin?.exchange_coin_amount}
+                        // value={standCoin?.exchange_coin_amount}
+                        value={parseFloat(
+                          standCoin.exchange_coin_amount
+                        ).toFixed(2)}
                         displayType={"text"}
-                        decimalScale={2}
+                        // decimalScale={2}
                         thousandSeparator={true}
                         // prefix={"$"}
                         fixedDecimalScale={true}
@@ -432,9 +444,10 @@ function Buy(props) {
                     <p className="mx-1">Available:</p>
                     {solidCoin > 0 ? (
                       <CurrencyFormat
-                        value={solidCoin}
+                        // value={solidCoin}
+                        value={parseFloat(solidCoin).toFixed(4)}
                         displayType={"text"}
-                        decimalScale={2}
+                        // decimalScale={2}
                         thousandSeparator={true}
                         // prefix={"$"}
                         fixedDecimalScale={true}

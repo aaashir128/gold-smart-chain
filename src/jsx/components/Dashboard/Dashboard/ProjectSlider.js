@@ -139,9 +139,9 @@ const ProjectSlider = (props) => {
                       <strong>
                         {props.coin > 0 ? (
                           <CurrencyFormat
-                            value={props.coin}
+                            value={parseFloat(props.coin).toFixed(2)}
                             displayType={"text"}
-                            decimalScale={2}
+                            // decimalScale={4}
                             thousandSeparator={true}
                             fixedDecimalScale={true}
                             renderText={(value) => <p>{value}</p>}
@@ -194,9 +194,10 @@ const ProjectSlider = (props) => {
                       <strong>
                         {props.solid > 0 ? (
                           <CurrencyFormat
-                            value={props.solid}
+                            // value={props.solid}
+                            value={parseFloat(props.solid).toFixed(4)}
                             displayType={"text"}
-                            decimalScale={2}
+                            // decimalScale={2}
                             thousandSeparator={true}
                             fixedDecimalScale={true}
                             renderText={(value) => <p>{value}</p>}

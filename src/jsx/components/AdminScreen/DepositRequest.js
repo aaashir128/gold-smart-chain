@@ -28,7 +28,7 @@ function DepositRequest(props) {
   const [reason, setReason] = useState("");
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(10);
-  const sort = 10;
+  const sort = 100;
 
   const activePag = useRef(0);
   const chageData = (frist, sec) => {

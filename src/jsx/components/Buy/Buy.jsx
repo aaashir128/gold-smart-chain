@@ -195,9 +195,10 @@ function Buy(props) {
                   <p className="mx-1">Available:</p>
                   {coin > 0 ? (
                     <CurrencyFormat
-                      value={coin}
+                      // value={coin}
+                      value={parseFloat(coin).toFixed(4)}
                       displayType={"text"}
-                      decimalScale={2}
+                      // decimalScale={2}
                       thousandSeparator={true}
                       // prefix={"$"}
                       fixedDecimalScale={true}

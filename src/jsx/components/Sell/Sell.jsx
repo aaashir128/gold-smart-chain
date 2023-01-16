@@ -63,6 +63,8 @@ function Sell(props) {
             headers: { "x-auth-token": token },
           })
           .then((res) => {
+            console.log("amount", buyAmount);
+
             console.log(res, "res");
             toast.success("✔️ Coin Sold!", {
               position: "top-right",
@@ -77,6 +79,7 @@ function Sell(props) {
           .catch((err) => {
             console.log("err", err.response.data);
           });
+        setBuyAmount({ ...buyAmount, solid: 0 });
       } else {
         console.log("amount not sufficent");
         toast.error("❌ Invalid Amount", {
@@ -168,9 +171,10 @@ function Sell(props) {
                   <p className="mx-1">Available:</p>
                   {coin?.solid_coin > 0 ? (
                     <CurrencyFormat
-                      value={coin?.solid_coin}
+                      // value={coin?.solid_coin}
+                      value={parseFloat(coin?.solid_coin).toFixed(4)}
                       displayType={"text"}
-                      decimalScale={2}
+                      // decimalScale={2}
                       thousandSeparator={true}
                       // prefix={"$"}
                       fixedDecimalScale={true}
