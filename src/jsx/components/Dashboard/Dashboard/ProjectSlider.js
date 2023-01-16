@@ -7,11 +7,46 @@ import { baseURL, tradeAPI } from "../../../../Strings/Strings";
 import standCoin from "../../../../images/stand.png";
 import solidToken from "../../../../images/solid.png";
 import CurrencyFormat from "react-currency-format";
+import { Spinner } from "react-bootstrap";
 
 const ProjectSlider = (props) => {
   const [data, setData] = useState([]);
   const [coins, setCoins] = useState(0);
   const [invest, setInvest] = useState(0);
+  const [coin, setCoin] = useState();
+  const [solid, setSolid] = useState();
+  const [isLoaded, setIsLoaded] = useState({ coin: false, token: false });
+
+  useEffect(() => {
+    let usr = localStorage.getItem("user");
+    usr = JSON.parse(usr);
+    setIsLoaded({ ...isLoaded, coin: true });
+    axios
+      .get(`${baseURL}/api/solidcoin/${usr?.id}`, {
+        headers: { "x-auth-token": tokn },
+      })
+      .then((res) => {
+        // console.log(res, "resCoin");
+        setCoin(res?.data?.solid_coin);
+        setIsLoaded({ ...isLoaded, coin: false });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    axios
+      .get(`${baseURL}/api/exchangecoin/${usr?.id}`, {
+        headers: { "x-auth-token": tokn },
+      })
+      .then((res) => {
+        // console.log(res, "resExhcange");
+        setSolid(res?.data?.exchange_coin_amount);
+        setIsLoaded({ ...isLoaded, token: false });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    setIsLoaded({ ...isLoaded, coin: false, token: false });
+  }, []);
 
   console.log("coin", props);
   useEffect(() => {
@@ -33,7 +68,7 @@ const ProjectSlider = (props) => {
     // });
   }, [props.history]);
 
-  console.log("coins", coins);
+  console.log("props", props);
   const settings = {
     dots: false,
     infinite: true,
@@ -96,29 +131,24 @@ const ProjectSlider = (props) => {
                 >
                   <span className="mb-7 d-block fs-28 fw-bold">STAND Coin</span>
                   <span className="mb-0 d-block fs-22 text-start">
-                    <strong>
-                      {props?.coin > 0 ? (
-                        <CurrencyFormat
-                          value={props?.coin}
-                          displayType={"text"}
-                          decimalScale={2}
-                          thousandSeparator={true}
-                          fixedDecimalScale={true}
-                          renderText={(value) => <p>{value}</p>}
-                        />
-                      ) : (
-                        "0.00"
-                      )}
-                      {/* <CurrencyFormat
-                        value={props?.coin}
-                        displayType={"text"}
-                        decimalScale={2}
-                        thousandSeparator={true}
-                        prefix={"$"}
-                        fixedDecimalScale={true}
-                        renderText={(value) => <p>{value}</p>}
-                      /> */}
-                    </strong>
+                    {isLoaded.coin ? (
+                      <Spinner animation="grow" />
+                    ) : (
+                      <strong>
+                        {coin > 0 ? (
+                          <CurrencyFormat
+                            value={coin}
+                            displayType={"text"}
+                            decimalScale={2}
+                            thousandSeparator={true}
+                            fixedDecimalScale={true}
+                            renderText={(value) => <p>{value}</p>}
+                          />
+                        ) : (
+                          "0.00"
+                        )}
+                      </strong>
+                    )}
                   </span>
                 </div>
               </div>
@@ -156,30 +186,24 @@ const ProjectSlider = (props) => {
                   </span>
                   <span className="mb-0 d-block fs-22 text-start">
                     {/* <strong>{props?.token}</strong> */}
-                    <strong>
-                      {props?.solid > 0 ? (
-                        <CurrencyFormat
-                          value={props?.solid}
-                          displayType={"text"}
-                          decimalScale={2}
-                          thousandSeparator={true}
-                          fixedDecimalScale={true}
-                          renderText={(value) => <p>{value}</p>}
-                        />
-                      ) : (
-                        "0.00"
-                      )}
-
-                      {/* <CurrencyFormat
-                        value={props?.solid}
-                        displayType={"text"}
-                        decimalScale={2}
-                        thousandSeparator={true}
-                        prefix={"$"}
-                        fixedDecimalScale={true}
-                        renderText={(value) => <p>{value}</p>}
-                      /> */}
-                    </strong>
+                    {isLoaded.token ? (
+                      <Spinner animation="grow" />
+                    ) : (
+                      <strong>
+                        {solid > 0 ? (
+                          <CurrencyFormat
+                            value={solid}
+                            displayType={"text"}
+                            decimalScale={2}
+                            thousandSeparator={true}
+                            fixedDecimalScale={true}
+                            renderText={(value) => <p>{value}</p>}
+                          />
+                        ) : (
+                          "0.00"
+                        )}
+                      </strong>
+                    )}
                   </span>
                 </div>
               </div>

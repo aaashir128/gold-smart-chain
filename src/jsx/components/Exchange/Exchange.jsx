@@ -260,7 +260,7 @@ function Buy(props) {
                   <p>Spend</p>
                   <p className="d-flex">
                     <p className="mx-1">Available:</p>
-                    {solidCoin >= 1 ? (
+                    {solidCoin > 0 ? (
                       <CurrencyFormat
                         value={solidCoin}
                         displayType={"text"}

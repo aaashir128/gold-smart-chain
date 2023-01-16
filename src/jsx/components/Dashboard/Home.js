@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import loadable from "@loadable/component";
 import pMinDelay from "p-min-delay";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 //Images
 
 //Import Components
@@ -87,6 +87,7 @@ const Home = (props) => {
       });
   }, []);
 
+  console.log("amount", amount);
   // useEffect(() => {
 
   // }, [coin]);
@@ -109,15 +110,19 @@ const Home = (props) => {
                           Portfolio Value
                         </span>
                         <h2 className="fs-30 font-w700 mb-3">
-                          <CurrencyFormat
-                            value={amount?.balance}
-                            displayType={"text"}
-                            decimalScale={2}
-                            thousandSeparator={true}
-                            prefix={"$"}
-                            fixedDecimalScale={true}
-                            renderText={(value) => <p>{value}</p>}
-                          />
+                          {!amount.balance ? (
+                            <Spinner animation="grow" />
+                          ) : (
+                            <CurrencyFormat
+                              value={amount?.balance}
+                              displayType={"text"}
+                              decimalScale={2}
+                              thousandSeparator={true}
+                              prefix={"$"}
+                              fixedDecimalScale={true}
+                              renderText={(value) => <p>{value}</p>}
+                            />
+                          )}
                         </h2>
                         <Button className="btn btn-primary mb-0 ms-0 px-4">
                           Portfolio
@@ -127,7 +132,10 @@ const Home = (props) => {
                     <br />
                     <div className="col-xl-12">
                       <div className="card-body pt-0">
-                        <ProjectSlider coin={solid} solid={coin} />
+                        <ProjectSlider
+                          coin={solid ? solid : 0}
+                          solid={coin ? coin : 0}
+                        />
                       </div>
                     </div>
                   </div>
