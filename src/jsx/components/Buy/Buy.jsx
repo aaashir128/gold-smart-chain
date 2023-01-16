@@ -17,7 +17,7 @@ function Buy(props) {
   const [solidValue, setSolidValue] = useState(0);
   const [data, setData] = useState([]);
   const tokn = JSON.parse(localStorage.getItem("token"));
-  const [buyAmount, setBuyAmount] = useState({ usd: 1, solid: 1 });
+  const [buyAmount, setBuyAmount] = useState({ usd: 0, solid: 0 });
 
   const changeAmountUsd = (e) => {
     console.log("val", e.target.value);
@@ -38,7 +38,18 @@ function Buy(props) {
   const notifyTopRight = async (e) => {
     e.preventDefault();
 
-    if (buyAmount.usd > 0) {
+    if (buyAmount.usd > 0 && buyAmount.usd <= 100000) {
+      if (data?.balance < buyAmount.usd) {
+        toast.error("❌ User has not enough money", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
+      }
       console.log("amount is sufficent");
       let token = await localStorage.getItem("token");
       token = JSON.parse(token);
@@ -147,7 +158,7 @@ function Buy(props) {
                 <p>Spend</p>
                 <p className="d-flex">
                   <p className="mx-1">Available:</p>
-                  {data?.balance >= 1 ? (
+                  {data?.balance > 0 ? (
                     <CurrencyFormat
                       value={data?.balance}
                       displayType={"text"}
@@ -182,7 +193,7 @@ function Buy(props) {
                 <p>Receive</p>
                 <p className="d-flex">
                   <p className="mx-1">Available:</p>
-                  {coin >= 1 ? (
+                  {coin > 0 ? (
                     <CurrencyFormat
                       value={coin}
                       displayType={"text"}
@@ -232,14 +243,14 @@ function Buy(props) {
                     height="36px"
                     style={{ objectFit: "contain" }}
                   />
-                  <p>Solid</p>
+                  <p>SOLID</p>
                 </div>
               </div>
             </div>
             <div className="col-xl-6 col-lg-6 m-auto  d-flex justify-content-between">
               <p>Price</p>
               <p className="d-flex">
-                1 Solid =
+                1 SOLID =
                 <CurrencyFormat
                   value={solidValue}
                   displayType={"text"}

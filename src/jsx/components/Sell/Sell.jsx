@@ -16,7 +16,7 @@ function Sell(props) {
   const [solid, setSolid] = useState();
   const [solidValue, setSolidValue] = useState(0);
 
-  const [buyAmount, setBuyAmount] = useState({ usd: 1, solid: 1 });
+  const [buyAmount, setBuyAmount] = useState({ usd: 0, solid: 0 });
   const tokn = JSON.parse(localStorage.getItem("token"));
 
   const changeAmountUsd = (e) => {
@@ -39,7 +39,12 @@ function Sell(props) {
     e.preventDefault();
 
     if (coin?.solid_coin >= 1) {
-      if (buyAmount.solid >= 0 || buyAmount.usd >= 0) {
+      if (
+        buyAmount.solid >= 0 &&
+        buyAmount.usd >= 0 &&
+        buyAmount.solid <= 100000 &&
+        buyAmount.usd <= 100000
+      ) {
         console.log("amount is sufficent");
         let token = await localStorage.getItem("token");
         token = JSON.parse(token);
@@ -161,7 +166,7 @@ function Sell(props) {
                 <p>Sell</p>
                 <p className="d-flex">
                   <p className="mx-1">Available:</p>
-                  {coin?.solid_coin >= 1 ? (
+                  {coin?.solid_coin > 0 ? (
                     <CurrencyFormat
                       value={coin?.solid_coin}
                       displayType={"text"}
@@ -192,7 +197,7 @@ function Sell(props) {
                     height="36px"
                     style={{ objectFit: "contain" }}
                   />
-                  <p>Solid</p>
+                  <p>SOLID</p>
                 </div>
               </div>
             </div>
@@ -201,7 +206,7 @@ function Sell(props) {
                 <p>Receive</p>
                 <p className="d-flex">
                   <p className="mx-1">Available:</p>
-                  {amount?.balance >= 1 ? (
+                  {amount?.balance > 0 ? (
                     <CurrencyFormat
                       value={amount?.balance}
                       displayType={"text"}
@@ -234,7 +239,7 @@ function Sell(props) {
             <div className="col-xl-6 col-lg-6 m-auto  d-flex justify-content-between">
               <p>Price</p>
               <p className="d-flex">
-                1 Solid =
+                1 SOLID =
                 <CurrencyFormat
                   value={solidValue}
                   displayType={"text"}

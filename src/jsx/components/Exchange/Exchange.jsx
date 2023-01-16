@@ -20,7 +20,7 @@ function Buy(props) {
   const [standRate, setStandRate] = useState(0);
   const [solidCoin, setSolidCoin] = useState(0);
   const [standCoin, setStandCoin] = useState([]);
-  const [buyAmount, setBuyAmount] = useState({ solid: 1, stand: standRate });
+  const [buyAmount, setBuyAmount] = useState({ solid: 0, stand: standRate });
 
   const changeFields = () => {
     if (solidToStand === true) {
@@ -71,7 +71,7 @@ function Buy(props) {
   const convertCoinAPI = async (e) => {
     e.preventDefault();
 
-    if (buyAmount.stand > 0) {
+    if (buyAmount.stand > 0 && buyAmount.stand <= 100000) {
       console.log("amount is sufficent");
       let token = await localStorage.getItem("token");
       token = JSON.parse(token);
@@ -82,7 +82,11 @@ function Buy(props) {
       console.log("usr", usr);
 
       if (solidToStand) {
-        if (solidCoin <= 0 || solidCoin < buyAmount.solid) {
+        if (
+          solidCoin > 0 &&
+          solidCoin <= 100000 &&
+          solidCoin < buyAmount.solid
+        ) {
           toast.error("❌ Invalid Solid Amount!", {
             position: "top-right",
             autoClose: 5000,
@@ -127,7 +131,8 @@ function Buy(props) {
         }
       } else {
         if (
-          buyAmount.stand <= 0 ||
+          buyAmount.stand > 0 &&
+          buyAmount.solid <= 100000 &&
           standCoin.exchange_coin_amount < buyAmount.stand
         ) {
           toast.error("❌ Invalid Stand Amount!", {
@@ -297,7 +302,7 @@ function Buy(props) {
                       height="36px"
                       style={{ objectFit: "contain" }}
                     />
-                    <p>Solid</p>
+                    <p>SOLID</p>
                   </div>
                 </div>
               </div>
@@ -307,7 +312,7 @@ function Buy(props) {
                   <p>Spend</p>
                   <p className="d-flex">
                     <p className="mx-1">Available:</p>
-                    {standCoin.exchange_coin_amount >= 1 ? (
+                    {standCoin.exchange_coin_amount > 0 ? (
                       <CurrencyFormat
                         value={standCoin.exchange_coin_amount}
                         displayType={"text"}
@@ -351,7 +356,7 @@ function Buy(props) {
                       height="36px"
                       style={{ objectFit: "contain" }}
                     />
-                    <p>Stand</p>
+                    <p>STAND</p>
                   </div>
                 </div>
               </div>
@@ -366,7 +371,7 @@ function Buy(props) {
 
                   <p className="d-flex">
                     <p className="mx-1">Available:</p>
-                    {standCoin >= 1 ? (
+                    {standCoin > 0 ? (
                       <CurrencyFormat
                         value={standCoin}
                         displayType={"text"}
@@ -415,7 +420,7 @@ function Buy(props) {
                       height="36px"
                       style={{ objectFit: "contain" }}
                     />
-                    <p>Stand</p>
+                    <p>STAND</p>
                   </div>
                 </div>
               </div>
@@ -425,7 +430,7 @@ function Buy(props) {
                   <p>Receive</p>
                   <p className="d-flex">
                     <p className="mx-1">Available:</p>
-                    {solidCoin >= 1 ? (
+                    {solidCoin > 0 ? (
                       <CurrencyFormat
                         value={solidCoin}
                         displayType={"text"}
@@ -468,7 +473,7 @@ function Buy(props) {
                       height="36px"
                       style={{ objectFit: "contain" }}
                     />
-                    <p>Solid</p>
+                    <p>SOLID</p>
                   </div>
                 </div>
               </div>
@@ -476,7 +481,7 @@ function Buy(props) {
             <div className="col-xl-6 col-lg-6 m-auto  d-flex justify-content-between">
               <p>Price</p>
               <p className="d-flex">
-                1 Solid =
+                1 SOLID =
                 <CurrencyFormat
                   value={standRate}
                   displayType={"text"}
@@ -485,7 +490,7 @@ function Buy(props) {
                   fixedDecimalScale={true}
                   renderText={(value) => <p>{value}</p>}
                 />
-                Stand
+                STAND
               </p>
             </div>
 

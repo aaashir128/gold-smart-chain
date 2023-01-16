@@ -26,7 +26,7 @@ function CommissionSettings(props) {
   const updateValue = async (e) => {
     e.preventDefault();
 
-    if (solidPrice > 0) {
+    if (solidPrice > 0 && solidPrice <= 100000) {
       // let token = await localStorage.getItem("token");
       // token = JSON.parse(token);
       // console.log("token", token);

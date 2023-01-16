@@ -13,7 +13,7 @@ function Deposit(props) {
   const notifyTopRight = async (e) => {
     e.preventDefault();
 
-    if (amount > 0) {
+    if (amount > 0 && amount <= 100000) {
       console.log("amount is sufficent");
       let token = await localStorage.getItem("token");
       token = JSON.parse(token);

@@ -94,10 +94,10 @@ const ProjectSlider = (props) => {
                     justifyContent: "center",
                   }}
                 >
-                  <span className="mb-7 d-block fs-28 fw-bold">Stand Coin</span>
+                  <span className="mb-7 d-block fs-28 fw-bold">STAND Coin</span>
                   <span className="mb-0 d-block fs-22 text-start">
                     <strong>
-                      {props?.coin >= 1 ? (
+                      {props?.coin > 0 ? (
                         <CurrencyFormat
                           value={props?.coin}
                           displayType={"text"}
@@ -152,12 +152,12 @@ const ProjectSlider = (props) => {
                   }}
                 >
                   <span className="mb-7 d-block fs-28 fw-bold">
-                    Solid Token
+                    SOLID Token
                   </span>
                   <span className="mb-0 d-block fs-22 text-start">
                     {/* <strong>{props?.token}</strong> */}
                     <strong>
-                      {props?.solid >= 1 ? (
+                      {props?.solid > 0 ? (
                         <CurrencyFormat
                           value={props?.solid}
                           displayType={"text"}
